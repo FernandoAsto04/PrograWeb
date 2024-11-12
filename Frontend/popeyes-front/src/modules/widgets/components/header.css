@@ -17,10 +17,6 @@ body{
     color: black;
 
     font-family: 'Open Sans';
-
-    position:sticky;
-    top: 0;
-    margin: auto;
 }
 
 .container-img{
@@ -49,7 +45,6 @@ body{
 
     cursor: pointer;
 
-
     align-items: center;
     font-family: 'Open Sans';
     font-weight: 900;
@@ -69,7 +64,6 @@ body{
     display: flex;
 
     list-style: none;
-
 
     font-size: 15px;
     font-weight: 760;
