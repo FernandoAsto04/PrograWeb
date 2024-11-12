@@ -1,11 +1,11 @@
 import React from "react";
-import { Link, Route, BrowserRouter as Router, Routes, useParams } from 'react-router-dom';
+import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Footer } from "./Footer";
 
 
 const Pedidos = () => {
     return(
         <>
-
         </>
     );
   }
@@ -70,6 +70,7 @@ export const Header = () => {
                     <Route path="/pedido-delivery" element={<Pedidos></Pedidos>}></Route>
                 </Routes>
             </nav>
+            
         </Router>
     )
 }

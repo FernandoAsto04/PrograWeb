@@ -6,16 +6,18 @@
 
 body{
     margin: 0;
+    padding: 0;
 }
 
 .nav{
     display: flex;
     align-items: center;
-    padding: 10px 20px;
+    padding: 12px 20px;
     background-color: white;
     color: black;
 
     font-family: 'Open Sans';
+
 }
 
 .container-img{
