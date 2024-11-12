@@ -6,21 +6,24 @@ function App() {
   return (
     <>
       <Header/>
-      <p>Alo</p>
-      <p>Alo</p>
-      <p>Alo</p>
-      <p>Alo</p>
-      <p>Alo</p>
-      <p>Alo</p>
-      <p>Alo</p>
-      <p>Alo</p>
+      <p>Aqui va el main</p>
+      <p>Aqui va el main</p>
+      <p>Aqui va el main</p>
+      <p>Aqui va el main</p>
 
+      <p>Aqui va el main</p>
+      <p>Aqui va el main</p>
+      <p>Aqui va el main</p>
+      <p>Aqui va el main</p>
+      <p>Aqui va el main</p>
+      <p>Aqui va el main</p>
+      <p>Aqui va el main</p>
+      <p>Aqui va el main</p>
+      <p>Aqui va el main</p>
+      <p>Aqui va el main</p>
+      <p>Aqui va el main</p>
+      <p>Aqui va el main</p>
 
-      <p>Alo</p>
-      <p>Alo</p>
-      <p>Alo</p>
-      <p>Alo</p>
-      <p>Alo</p>
       
       <Footer/>
     </>
