@@ -14,7 +14,7 @@ hr{
 
 .footer{
     justify-content: space-between;
-    padding-top: 72px;
+    padding-top: 25px;
 
 
     background-color: white;
@@ -36,6 +36,7 @@ div{
 .container-izq{
     display: block;
     margin-left: 20px;
+    margin-right: 10px;
 
     font-size: 12px;
     font-weight: 900;
@@ -93,7 +94,7 @@ div{
 
 .ayuda{
     display: block;
-    margin-left: 10pc;
+    margin-left: 28vh;
 }
 
 .container-der{
@@ -103,21 +104,21 @@ div{
     color: black;
     font-weight: 700;
 
-    margin-left: 10pc;
+    margin-left: 12pc;
 }
 
 .footer ul{
     display: block;
     list-style: none;
 
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
 
     color: rgb(87, 87, 87);
 }
 
 .footer li{
-    margin-top: 5px;
+    margin-top: 3px;
     margin-bottom: 5px;
 }
 
@@ -126,10 +127,56 @@ li:hover{
     cursor: pointer;
 }
 
+.reclamaciones{
+    font-size: 13px;
+    font-weight: 750;
+
+    margin-bottom: 5px;
+    padding-top: 5px;
+    margin-top: 5px;
+}
+
+#libro{
+    width: 100px;
+    margin-top: 10px;
+
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+.metodos{
+    font-size: 13px;
+    font-weight: 750;
+}
+
+#visa{
+    width: 45px;
+    border: solid 1px rgb(206, 204, 204);
+    border-radius: 6px;
+
+    margin-top: 10px;
+    margin-right: 8px;
+}
+
+#master{
+    width: 45px;
+    border: solid 1px rgb(206, 204, 204);
+    border-radius: 6px;
+
+    margin-top: 10px;
+    margin-right: 8px;
+}
+
+#amex{
+    width: 45px;
+    border: solid 1px rgb(206, 204, 204);
+    border-radius: 6px;
+
+    margin-top: 10px;
+}
 
 .copyright{
     display: block;
-
 }
 
 .copy{
@@ -141,5 +188,4 @@ li:hover{
     font-weight: 600;
 
     color: rgb(87, 87, 87);
-
 }

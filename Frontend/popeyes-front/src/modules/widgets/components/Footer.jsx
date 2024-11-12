@@ -45,18 +45,21 @@ export const Footer = () => {
                 </div>
 
                 <div className="container-der">
-                    <div>
+                    <div className="reclamaciones"> 
                         Libro de Reclamaciones
                         <br></br>
-                        <img id="logo_a" src= "/" alt="Logo"/> 
+                        <a href="https://www.popeyes.com.pe/popeyes-reclamaciones/">
+                            <img id="libro" src= "/fotos_footer/LibroDeReclamaciones.png" alt="Libro"/>
+                        </a>
+                             
                     </div>
                     
-                    <div>
+                    <div className="metodos">
                         Métodos de Pago
                         <br></br>
-                            <img id="" src="/" alt="foto 1"></img>
-                            <img id="" src="/" alt="foto 2"></img>
-                            <img id="" src="/" alt="foto 3"></img>
+                            <img id="visa" src="/fotos_footer/Visa.avif" alt="Visa"></img>
+                            <img id="master" src="/fotos_footer/mastercard.png" alt="Mastercard"></img>
+                            <img id="amex" src="/fotos_footer/amex.png" alt="Amex"></img>
                     </div>
                 </div>
 
