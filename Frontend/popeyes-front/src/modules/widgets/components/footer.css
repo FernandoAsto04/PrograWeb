@@ -13,9 +13,11 @@ hr{
 }
 
 .footer{
-    justify-content: space-between;
-    padding-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 40vh;
 
+    padding-top: 35px;
 
     background-color: white;
     color: black;
@@ -25,18 +27,14 @@ hr{
 
 .texto{
     display: flex;
-
+    box-sizing: border-box;
+    width: 100%;
 }
 
-div{
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
 
 .container-izq{
     display: block;
     margin-left: 20px;
-    margin-right: 10px;
 
     font-size: 12px;
     font-weight: 900;
@@ -45,8 +43,7 @@ div{
 #logo_a{
     width: 159px;
     height: 41px;
-    margin-left: 0;
-    margin-right: 60px;
+    margin-right: 0px;
 
     margin-bottom: 20px;
 }
@@ -58,7 +55,7 @@ div{
 #insta{
     width: 30px;
     background-color: rgb(218, 212, 212);
-    border-radius: 50% 50% 50% 50%;
+    border-radius: 50%;
     cursor: pointer;
 
 }
@@ -66,17 +63,23 @@ div{
 #face{
     width: 30px;
     background-color: rgb(132, 12, 12);
-    border-radius: 50% 50% 50% 50%;
+    border-radius: 50%;
     margin-left: 10px;
     cursor: pointer;
 }
 
-
-
 .productos{
-    display: block;
+    margin-left: 8pc;
+    text-align: justify;
 
-    margin-left: 5pc;
+    width: 25%;
+}
+
+.ayuda{
+    margin-left: 4pc;
+    text-align: justify;
+
+    width: 25%;
 }
 
 #titulo{
@@ -85,41 +88,30 @@ div{
 
     color: black;
 
-
     text-decoration: none;
     cursor: auto;
 
-    margin-bottom: 13px;
-}
-
-.ayuda{
-    display: block;
-    margin-left: 28vh;
+    margin-bottom: 5px;
 }
 
 .container-der{
-    display: block;
 
     font-size: 13px;
     color: black;
-    font-weight: 700;
+    font-weight: 750;
 
-    margin-left: 12pc;
+    margin-left: 10px;
 }
 
 .footer ul{
-    display: block;
     list-style: none;
 
     font-size: 11px;
     font-weight: 600;
 
     color: rgb(87, 87, 87);
-}
-
-.footer li{
-    margin-top: 3px;
-    margin-bottom: 5px;
+    line-height: 1.8;
+    text-decoration: none;
 }
 
 li:hover{
@@ -127,26 +119,15 @@ li:hover{
     cursor: pointer;
 }
 
-.reclamaciones{
-    font-size: 13px;
-    font-weight: 750;
-
-    margin-bottom: 5px;
-    padding-top: 5px;
-    margin-top: 5px;
-}
-
 #libro{
-    width: 100px;
-    margin-top: 10px;
+    width: 90px;
+    margin-top: 5px;
 
-    padding-bottom: 5px;
     cursor: pointer;
 }
 
-.metodos{
-    font-size: 13px;
-    font-weight: 750;
+#tarjetas{
+    cursor: default;
 }
 
 #visa{
@@ -154,7 +135,6 @@ li:hover{
     border: solid 1px rgb(206, 204, 204);
     border-radius: 6px;
 
-    margin-top: 10px;
     margin-right: 8px;
 }
 
@@ -165,6 +145,7 @@ li:hover{
 
     margin-top: 10px;
     margin-right: 8px;
+    cursor: default;
 }
 
 #amex{
@@ -173,19 +154,18 @@ li:hover{
     border-radius: 6px;
 
     margin-top: 10px;
+    cursor: default;
 }
 
-.copyright{
-    display: block;
-}
 
 .copy{
     text-align: center;
-    margin-top: 3pc;
-    padding-bottom: 1pc;
+    padding: 20px;
 
     font-size: 11px;
     font-weight: 600;
+    font-family: 'Open Sans';
 
+    background-color: white;
     color: rgb(87, 87, 87);
 }
