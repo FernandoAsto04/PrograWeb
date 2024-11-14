@@ -4,11 +4,12 @@ export default function Principal() {
     return(
         <div>
             <ul>
-                <li><Link to={`/LoginScreen`}>LOGIN_SCREEN</Link></li>
-                <li><Link to={`/MisPedidosScreen`}>MISPEDIDOS_SCREEN</Link></li>
-                <li><Link to={`/LocalesScreen`}>LOCALES_SCREEN</Link></li>
-                <li><Link to={`/MenuScreen`}>MENU_SCREEN</Link></li>
-                <li><Link to={`/Pruebas`}>PRUEBAS</Link></li>
+                <li><Link to={`/login`}>LOGIN_SCREEN</Link></li>
+                <li><Link to={`/mispedidos`}>MISPEDIDOS_SCREEN</Link></li>
+                <li><Link to={`/locales`}>LOCALES_SCREEN</Link></li>
+                <li><Link to={`/menu`}>MENU_SCREEN</Link></li>
+                <li><Link to={`/admin`}>ADMIN</Link></li>
+                <li><Link to={`/pruebas`}>PRUEBAS</Link></li>
             </ul>
         </div>
     );
