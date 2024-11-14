@@ -1,0 +1,289 @@
+/*Estilos Carrusel*/
+.carrusel-container {
+    position: relative;
+    width: 100%; /* O puedes especificar un ancho como 1000px */
+    max-width: 1600px; /* Tamaño máximo opcional */
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  
+  .carrusel-image {
+    width: 100%;
+    height: auto; /* Mantiene la proporción */
+  }
+  
+  
+  .carrusel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5); /* Color traslúcido */
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1.2em;
+  }
+  
+  .carrusel-button:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .carrusel-button.prev {
+    left: 10px;
+  }
+  
+  .carrusel-button.next {
+    right: 10px;
+  }
+
+
+
+
+
+  
+/* Estilos Promociones */
+
+.promo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Título de la sección */
+.promo-seccion {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Contenedor de las tarjetas */
+.promo-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Estilos de la tarjeta individual */
+.promo-card {
+    width: 280px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    transition: transform 0.3s ease;
+    margin: 10px;
+    text-align: left; /* Alineación del texto */
+}
+
+.promo-card:hover {
+    transform: scale(1.05);
+}
+
+/* Imagen de la tarjeta */
+.promo-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+/* Título de la promoción */
+.promo-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+}
+
+/* Descripción de la promoción */
+.promo-description {
+    font-size: 14px;
+    color: gray;
+    margin: 10px 0;
+}
+
+/* Contenedor de precios (precio actual y antiguo) */
+.promo-price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff5a00;
+}
+
+.old-price {
+    font-size: 16px;
+    text-decoration: line-through;
+    color: gray;
+}
+
+/* Botón de agregar al pedido */
+.promo-button {
+    border-radius: 20px;
+    padding: 10px 20px;
+    background-color: orangered;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.promo-button:hover {
+    background-color: orange;
+}
+
+
+
+
+/* Estilos Mas vendidos */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Estilos Extras */
+
+.cartas-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.cartas-container {
+    display: flex;
+    flex-direction: row;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 500px; /* Ajusta el ancho de cada tarjeta */
+    text-align: left;
+}
+
+.imagen-container img {
+    width: 260px; /* Tamaño fijo para la imagen */
+    height: 100%; /* Hace que la imagen ocupe el 100% del alto del contenedor */
+    object-fit: cover; /* Ajusta la imagen para que no se distorsione */
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.contenido-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contenido-container h2 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.contenido-container p {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.contenido-container button {
+    padding: 10px 20px;
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    align-self: flex-start;
+}
+
+.contenido-container button:hover {
+    background-color: #e65c00;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Estilos MasVendidos*/
+
