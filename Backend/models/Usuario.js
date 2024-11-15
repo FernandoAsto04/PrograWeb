@@ -1,4 +1,4 @@
-import { DataTypes, INTEGER } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 // Así se crea un modelo, osea una tabla, se comporta de igual forma como el Modelo Relacional
 export const Usuario = sequelize.define(
@@ -9,16 +9,16 @@ export const Usuario = sequelize.define(
             autoIncrement: true
         },
         nombres:{
-            type: DataTypes.INTEGER
+            type: DataTypes.STRING
         },
         apellidos:{
-            type: DataTypes.INTEGER
+            type: DataTypes.STRING
         },
         correo:{
-            type: DataTypes.INTEGER
+            type: DataTypes.STRING
         },
         contrasenia:{
-            type: DataTypes.INTEGER
+            type: DataTypes.STRING
         },
         admin:{
             type: DataTypes.BOOLEAN,
