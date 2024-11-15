@@ -1,9 +1,21 @@
 import express from 'express';
 import cors from 'cors';
 import { sequelize } from './database/database.js';
-import { Usuario } from './models/Usuario.js';
-import { where } from 'sequelize';
+
+import { Carrito } from './models/Carrito.js';
 import { Direccion } from './models/Direccion.js';
+import { Documento } from './models/Documento.js';
+import { MetodoPago } from './models/MetodoPago.js';
+import { Pago } from './models/Pago.js';
+import { Pedido } from './models/Pedido.js';
+import { Producto_Carrito } from './models/Producto_Carrito.js';
+import { Producto_Pedido } from './models/Producto_Pedido.js';
+import { Producto } from './models/Producto.js';
+import { TipoDocumento } from './models/TipoDocumento.js';
+import { TipoPedido } from './models/TipoPedido.js';
+import { TipoProducto } from './models/TipoProducto.js';
+import { Usuario_Direccion } from './models/Usuario_Direccion.js';
+import { Usuario } from './models/Usuario.js';
 
 const app = express();
 const port = 3002;
@@ -154,11 +166,75 @@ app.delete("/direcciones/:id", async function(req, res){
 });
 
 
+/*Documento*/
+app.get("/documentos", async function(req, res){
+    const docActivos = await Documento.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(docActivos);
+});
+
+app.get("/documentos/:id", async function(req, res){
+    const id = req.params.id;
+    const doc = await Documento.findByPk(id); //Sirve solo para buscar por ID
+    if (doc) {
+        res.status(200).json(doc);
+    }else{
+        res.status(404).send("Error al recuperar la direccion")
+    }
+});
+
+app.post("/documentos", async function(req, res){
+    const data = req.body;
+    if (data.numero) {
+        const nuevodoc = await Documento.create(data);
+        res.status(200).json(nuevodoc);
+    }else{
+        res.status(404).send("Error al crear el documento")
+    }
+});
 
 
+/*TipoDocumento*/
 
+app.get("/tipodocumentos", async function(req, res){
+    const tipdocActivo = await TipoDocumento.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(tipdocActivo);
+});
 
+app.get("/tipodocumentos/:id", async function(req, res){
+    const id = req.params.id;
+    const tipdo = await TipoDocumento.findByPk(id); //Sirve solo para buscar por ID
+    if (doc) {
+        res.status(200).json(tipdo);
+    }else{
+        res.status(404).send("Error al recuperar la direccion")
+    }
+});
 
+app.post("/tipodocumentos", async function(req, res){
+    const data = req.body;
+    if (data.nombre) {
+        const ntipodoc = await TipoDocumento.create(data);
+        res.status(200).json(ntipodoc);
+    }else{
+        res.status(404).send("Error al crear el tipo de documento")
+    }
+});
+
+app.post("/tipodocumentos/:id/documentos", async function(req, res){
+    const datoDoc = req.body;
+    const nuevoDoc = await Documento.create(datoDoc);
+    const tipdoc = await TipoDocumento.findByPk(req.params.id);
+    tipdoc.addDocumento(nuevoDoc);
+    res.status(200).json(nuevoDoc);
+});
 
 
 

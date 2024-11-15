@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 // Así se crea un modelo, osea una tabla, se comporta de igual forma como el Modelo Relacional
+//Falta la FK Documento
 export const Usuario = sequelize.define(
     "Usuario", {
         id: {
@@ -31,6 +32,4 @@ export const Usuario = sequelize.define(
     }, {
         freezeTableName: true //Para que se mantenga el nombre de la tabla
     }
-
-
 );

@@ -1,23 +1,26 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
+import { Usuario } from "./Usuario.js";
 
-
-export const Direccion = sequelize.define(
-    "Direccion",{
-        id: {
+//Falta la FK
+export const Documento = sequelize.define(
+    "Documento",{
+        id:{
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-
-        nombre: DataTypes.STRING,
-
-        estado:{
+        
+        numero: DataTypes.INTEGER,
+        
+        estado: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         }
-    },{
+
+    }, {
         freezeTableName: true //Para que se mantenga el nombre de la tabla
     }
 );
+
 

@@ -1,23 +1,21 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-
-
-export const Direccion = sequelize.define(
-    "Direccion",{
-        id: {
+//faltan las pk
+export const Producto_Pedido = sequelize.define(
+    "Producto_Pedido", {
+        id:{
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
 
-        nombre: DataTypes.STRING,
+        cantidad: DataTypes.INTEGER,
 
-        estado:{
+        estado: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         }
-    },{
+    }, {
         freezeTableName: true //Para que se mantenga el nombre de la tabla
     }
 );
-
