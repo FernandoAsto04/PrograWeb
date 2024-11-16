@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {json} from 'express';
 import cors from 'cors';
 import { sequelize } from './database/database.js';
 
@@ -20,7 +20,8 @@ import { Usuario } from './models/Usuario.js';
 const app = express();
 const port = 3002;
 
-app.use(express.json());
+
+app.use(json());
 app.use(cors());
 
 async function verificarConexion(){
@@ -186,6 +187,7 @@ app.get("/documentos/:id", async function(req, res){
     }
 });
 
+
 app.post("/documentos", async function(req, res){
     const data = req.body;
     if (data.numero) {
@@ -195,6 +197,8 @@ app.post("/documentos", async function(req, res){
         res.status(404).send("Error al crear el documento")
     }
 });
+
+
 
 
 /*TipoDocumento*/
@@ -233,11 +237,9 @@ app.post("/tipodocumentos/:id/documentos", async (req, res) =>{
     const nuevoDoc = await Documento.create(datoDoc);
     const tipdoc = await TipoDocumento.findByPk(req.params.id);
     
+    tipdoc.addDocumento(nuevoDoc);
     res.status(200).json(nuevoDoc);
 });
-
-
-
 
 
 
