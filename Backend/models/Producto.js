@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
+import { Producto_Pedido } from "./Producto_Pedido.js"
 
 export const Producto = sequelize.define(
     "Producto",{
@@ -30,3 +31,14 @@ export const Producto = sequelize.define(
         freezeTableName: true //Para que se mantenga el nombre de la tabla
     }
 );
+
+Producto.hasMany(Producto_Pedido, {
+    foreignKey: "productoid",
+    sourceKey: "id"
+});
+
+Producto_Pedido.belongsTo(Producto, {
+    foreignKey: "productoid",
+    targetKey: "id"
+});
+
