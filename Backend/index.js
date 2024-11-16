@@ -211,7 +211,7 @@ app.get("/tipodocumentos", async function(req, res){
 app.get("/tipodocumentos/:id", async function(req, res){
     const id = req.params.id;
     const tipdo = await TipoDocumento.findByPk(id); //Sirve solo para buscar por ID
-    if (doc) {
+    if (tipdo) {
         res.status(200).json(tipdo);
     }else{
         res.status(404).send("Error al recuperar la direccion")
@@ -228,11 +228,11 @@ app.post("/tipodocumentos", async function(req, res){
     }
 });
 
-app.post("/tipodocumentos/:id/documentos", async function(req, res){
+app.post("/tipodocumentos/:id/documentos", async (req, res) =>{
     const datoDoc = req.body;
     const nuevoDoc = await Documento.create(datoDoc);
     const tipdoc = await TipoDocumento.findByPk(req.params.id);
-    tipdoc.addDocumento(nuevoDoc);
+    
     res.status(200).json(nuevoDoc);
 });
 

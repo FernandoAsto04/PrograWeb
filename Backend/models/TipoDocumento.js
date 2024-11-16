@@ -22,11 +22,11 @@ export const TipoDocumento = sequelize.define(
 );
 
 TipoDocumento.hasMany(Documento, {
-    foreignKey: "tipdocId",
+    foreignKey: "tipodocumentoId",
     sourceKey: "id"
 });
 
 Documento.belongsTo(TipoDocumento, {
-    foreignKey: "tipdocId",
-    sourceKey: "id"
+    foreignKey: "tipodocumentoId",
+    targetKey: "id"
 });
