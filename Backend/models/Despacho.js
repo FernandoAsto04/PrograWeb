@@ -1,19 +1,14 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 
-//Falta poner la FK
-export const Carrito = sequelize.define(
-    "Carrito",{
+export const Despacho = sequelize.define(
+    "Despacho",{
         id:{
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-
-        total: DataTypes.FLOAT,
-        fecha_creacion: DataTypes.DATE,
-        fecha_actualizacion: DataTypes.DATE,
-
+        nombre: DataTypes.STRING,
         estado:{
             type: DataTypes.BOOLEAN,
             defaultValue: true
@@ -22,4 +17,3 @@ export const Carrito = sequelize.define(
         freezeTableName: true //Para que se mantenga el nombre de la tabla
     }
 );
-

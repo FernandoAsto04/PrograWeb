@@ -8,14 +8,14 @@ import { Documento } from './models/Documento.js';
 import { MetodoPago } from './models/MetodoPago.js';
 import { Pago } from './models/Pago.js';
 import { Pedido } from './models/Pedido.js';
-import { Producto_Carrito } from './models/Producto_Carrito.js';
 import { Producto_Pedido } from './models/Producto_Pedido.js';
 import { Producto } from './models/Producto.js';
 import { TipoDocumento } from './models/TipoDocumento.js';
 import { TipoPedido } from './models/TipoPedido.js';
 import { TipoProducto } from './models/TipoProducto.js';
-import { Usuario_Direccion } from './models/Usuario_Direccion.js';
 import { Usuario } from './models/Usuario.js';
+import { Local, Local_Despacho } from './models/Local.js';
+import { Despacho } from './models/Despacho.js';
 
 const app = express();
 const port = 3002;
@@ -242,9 +242,94 @@ app.post("/tipodocumentos/:id/documentos", async (req, res) =>{
 });
 
 
+/*Local*/
+app.get("/locales", async function(req, res){
+    const localesActivos = await Local.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(localesActivos);
+});
+
+app.post("/locales", async function(req, res){
+    const data = req.body;
+    if (data.nombre && data.direccion && data.telefono) {
+        const local = await Local.create(data);
+        res.status(200).json(local);
+    }else{
+        res.status(404).send("Error al crear el tipo de documento")
+    }
+});
+
+/*Despacho */
+app.get("/despacho", async function(req, res){
+    const despachoActivo = await Despacho.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(despachoActivo);
+});
+
+app.post("/despacho", async function(req, res){
+    const data = req.body;
+    if (data.nombre) {
+        const despacho = await Despacho.create(data);
+        res.status(200).json(despacho);
+    }else{
+        res.status(404).send("Error al crear el tipo de documento")
+    }
+});
+
+/*Locales_Despacho */
+
+app.get("/localdespacho", async function(req, res){
+    const ldActivo = await Local_Despacho.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(ldActivo);
+});
+
+app.post("/localdespacho", async (req, res) => {
+    const { localId, despachosIds } = req.body;
+
+    try {
+        // Asignar los despachos al local directamente
+        const local = await Local.findByPk(localId);
+        const despachos = await Despacho.findAll({ where: { id: despachosIds } });
+
+        await local.setDespachos(despachos); // Sobrescribe los despachos actuales
+
+        res.status(200).json({ message: "Despachos asignados correctamente." });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Ocurrió un error al asignar los despachos.");
+    }
+});
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Inicializar */
 
 app.listen(port,()=> {
     console.log("Servidor activo en el puerto " + port);
