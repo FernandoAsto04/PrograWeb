@@ -6,9 +6,10 @@ import LoginScreen from '../modules/auth/screens/LoginScreen'
 import MisPedidosScreen from '../modules/mispedidos/screens/MisPedidosScreen'
 import LocalesScreen from '../modules/locales/screens/LocalesScreen'
 import MenuScreen from '../modules/menu/screens/MenuScreen'
+import AgregarPedidoScreen from '../modules/agregar_pedido/screens/AgregarPedidoScreen'
+import DashboardScreen from '../modules/admin/screens/DashboardScreem';
 import Principal from '../modules/X_Principal'
 import Pruebas from '../modules/X_Pruebas'
-import DashboardScreen from '../modules/admin/screens/DashboardScreem';
 
 function AppNavigator() {
     return (
@@ -19,6 +20,7 @@ function AppNavigator() {
             <Route path='/mispedidos' element={<MisPedidosScreen/>}/>
             <Route path='/locales' element={<LocalesScreen/>}/>
             <Route path='/menu' element={<MenuScreen/>}/>
+            <Route path='/agregar_pedido' element={<AgregarPedidoScreen/>}/>            
             <Route path='/admin' element={<DashboardScreen/>}/>
         </Routes>
     );
