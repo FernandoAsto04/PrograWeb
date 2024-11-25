@@ -4,19 +4,19 @@ import { sequelize } from './database/database.js';
 
 
 import { Carrito } from './models/Carrito.js';
-import { Direccion } from './models/DireccionListo.js';
-import { Documento } from './models/DocumentoListo.js';
-import { MetodoPago } from './models/MetodoPagoListo.js';
-import { Pago } from './models/PagoListo.js';
-import { Pedido } from './models/PedidoListo.js';
+import { Direccion } from './models/Direccion.js';
+import { Documento } from './models/Documento.js';
+import { MetodoPago } from './models/MetodoPago.js';
+import { Pago } from './models/Pago.js';
+import { Pedido } from './models/Pedido.js';
 import { Producto_Pedido } from './models/Producto_Pedido.js';
 import { Producto } from './models/Producto.js';
-import { TipoDocumento } from './models/TipoDocumentoListo.js';
-import { TipoPedido } from './models/TipoPedidoListo.js';
+import { TipoDocumento } from './models/TipoDocumento.js';
+import { TipoPedido } from './models/TipoPedido.js';
 import { TipoProducto } from './models/TipoProducto.js';
 import { Usuario } from './models/UsuarioListo.js';
-import { Local, Local_Despacho } from './models/LocalListo.js';
-import { Despacho } from './models/DespachoListo.js';
+import { Local, Local_Despacho } from './models/Local.js';
+import { Despacho } from './models/Despacho.js';
 import { Pieza } from './models/Pieza.js';
 import { Nugget } from './models/Nugget.js';
 import { Sandwich } from './models/Sandwich.js';

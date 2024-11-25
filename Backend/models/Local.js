@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Despacho } from "./DespachoListo.js";
+import { Despacho } from "./Despacho.js";
 
 export const Local = sequelize.define(
     "Local",{

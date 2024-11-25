@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Documento } from "./DocumentoListo.js";
+import { Documento } from "./Documento.js";
 
 export const TipoDocumento = sequelize.define(
     "TipoDocumento",{

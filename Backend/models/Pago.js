@@ -1,17 +1,18 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Pedido } from "./PedidoListo.js";
+import { Pedido } from "./Pedido.js";
 
-export const TipoPedido = sequelize.define(
-    "TipoPedido", {
+export const Pago = sequelize.define(
+    "Pago",{
         id:{
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
 
-        nombre: DataTypes.STRING,
-
+        monto: DataTypes.FLOAT,
+        fecha: DataTypes.DATE,
+        
         estado: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
@@ -21,13 +22,13 @@ export const TipoPedido = sequelize.define(
     }
 );
 
-//No se porque no funciona D:
-TipoPedido.hasMany(Pedido, {
-    foreignKey: "tipoPedidoid",
+Pedido.hasMany(Pago, {
+    foreignKey: "pagoid",
     sourceKey: "id"
-});
+}); 
 
-Pedido.belongsTo(TipoPedido, {
-    foreignKey: "tipoPedidoid",
+Pago.belongsTo(Pedido, {
+    foreignKey: "pagoid",
     targetKey: "id"
 });
+

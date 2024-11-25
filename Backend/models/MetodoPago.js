@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Pago } from "./PagoListo.js";
+import { Pago } from "./Pago.js";
 
 export const MetodoPago = sequelize.define(
     "MetodoPago",{

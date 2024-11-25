@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Usuario } from "./UsuarioListo.js";
 
 //Falta la FK
 export const Documento = sequelize.define(
