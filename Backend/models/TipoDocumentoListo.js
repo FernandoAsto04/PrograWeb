@@ -1,18 +1,16 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Combo } from "./Combo.js";
+import { Documento } from "./DocumentoListo.js";
 
-
-export const Pieza = sequelize.define(
-    "Pieza",{
+export const TipoDocumento = sequelize.define(
+    "TipoDocumento",{
         id:{
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
 
-        nombre:DataTypes.STRING,
-        cantidad:DataTypes.INTEGER,
+        nombre: DataTypes.STRING,
 
         estado:{
             type: DataTypes.BOOLEAN,
@@ -23,13 +21,12 @@ export const Pieza = sequelize.define(
     }
 );
 
-Pieza.hasMany(Combo, {
-    foreignKey: "PiezaId",
+TipoDocumento.hasMany(Documento, {
+    foreignKey: "tipodocumentoId",
     sourceKey: "id"
 });
 
-Combo.belongsTo(Pieza, {
-    foreignKey: "PiezaId",
+Documento.belongsTo(TipoDocumento, {
+    foreignKey: "tipodocumentoId",
     targetKey: "id"
 });
-

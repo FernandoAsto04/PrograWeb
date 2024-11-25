@@ -1,19 +1,19 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Combo } from "./Combo.js";
+import { Pedido } from "./PedidoListo.js";
 
-
-export const MasVendidos = sequelize.define(
-    "MasVendidos",{
+export const Pago = sequelize.define(
+    "Pago",{
         id:{
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
 
-        nombre:DataTypes.STRING,
-
-        estado:{
+        monto: DataTypes.FLOAT,
+        fecha: DataTypes.DATE,
+        
+        estado: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         }
@@ -22,12 +22,13 @@ export const MasVendidos = sequelize.define(
     }
 );
 
-MasVendidos.hasMany(Combo, {
-    foreignKey: "MasVendidosId",
+Pedido.hasMany(Pago, {
+    foreignKey: "pagoid",
     sourceKey: "id"
-});
+}); 
 
-Combo.belongsTo(MasVendidos, {
-    foreignKey: "MasVendidosId",
+Pago.belongsTo(Pedido, {
+    foreignKey: "pagoid",
     targetKey: "id"
 });
+

@@ -1,20 +1,20 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Combo } from "./Combo.js";
+import { Usuario } from "./UsuarioListo.js";
 
-
-export const Sandwich = sequelize.define(
-    "Sandwich",{
+export const Pedido = sequelize.define(
+    "Pedido",{
         id:{
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
 
-        nombre:DataTypes.STRING,
-        cantidad:DataTypes.INTEGER,
-
-        estado:{
+        total: DataTypes.FLOAT,
+        fecha_creacion: DataTypes.DATE,
+        fecha_actualizacion: DataTypes.DATE,
+        
+        estado: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         }
@@ -23,12 +23,12 @@ export const Sandwich = sequelize.define(
     }
 );
 
-Sandwich.hasMany(Combo, {
-    foreignKey: "SandwichId",
-    sourceKey: "id"
+Pedido.belongsTo(Usuario, {
+    foreignKey: "pedidoid",
+    targetKey: "id"
 });
 
-Combo.belongsTo(Sandwich, {
-    foreignKey: "SandwichId",
-    targetKey: "id"
+Usuario.hasMany(Pedido, {
+    foreignKey: "pedidoid",
+    sourceKey: "id"
 });

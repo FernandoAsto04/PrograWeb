@@ -1,19 +1,18 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Combo } from "./Combo.js";
+import { Pedido } from "./PedidoListo.js";
 
-
-export const TamanioPapa = sequelize.define(
-    "TamanioPapa",{
+export const TipoPedido = sequelize.define(
+    "TipoPedido", {
         id:{
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
 
-        nombre:DataTypes.STRING,
+        nombre: DataTypes.STRING,
 
-        estado:{
+        estado: {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         }
@@ -22,12 +21,13 @@ export const TamanioPapa = sequelize.define(
     }
 );
 
-TamanioPapa.hasMany(Combo, {
-    foreignKey: "tamaniopapaId",
+//No se porque no funciona D:
+TipoPedido.hasMany(Pedido, {
+    foreignKey: "tipoPedidoid",
     sourceKey: "id"
 });
 
-Combo.belongsTo(TamanioPapa, {
-    foreignKey: "tamaniopapaId",
+Pedido.belongsTo(TipoPedido, {
+    foreignKey: "tipoPedidoid",
     targetKey: "id"
 });
