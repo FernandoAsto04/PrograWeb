@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Documento } from "./Documento.js";
 // Así se crea un modelo, osea una tabla, se comporta de igual forma como el Modelo Relacional
 //Falta la FK Documento
 export const Usuario = sequelize.define(

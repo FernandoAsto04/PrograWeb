@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database";
-import { Producto } from "./Producto";
 
 export const Extra = sequelize.define(
     "Extra", {
@@ -23,22 +22,3 @@ export const Extra = sequelize.define(
     }
 );
 
-export const Producto_Extra = sequelize.define(
-    "Producto_Extra",{
-        estado:{
-            seccion: DataTypes.STRING
-        },
-
-    },{
-        timestamps:false,
-        freezeTableName:true
-    }
-);
-
-Extra.belongsToMany(Producto,{
-    through: Producto_Extra
-});
-
-Producto.belongsToMany(Extra,{
-    through: Producto_Extra
-});
