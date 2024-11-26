@@ -10,20 +10,13 @@ import { MetodoPago } from './models/MetodoPago.js';
 import { Pago } from './models/Pago.js';
 import { Pedido } from './models/Pedido.js';
 import { Producto_Pedido } from './models/Producto_Pedido.js';
-import { Producto } from './models/Combo.js';
+import { Combo, Producto } from './models/Combo.js';
 import { TipoDocumento } from './models/TipoDocumento.js';
 import { TipoPedido } from './models/TipoPedido.js';
 import { TipoProducto } from './models/TipoProducto.js';
 import { Usuario } from './models/Usuario.js';
 import { Local, Local_Despacho } from './models/Local.js';
 import { Despacho } from './models/Despacho.js';
-import { Pieza } from './models/Pieza.js';
-import { Nugget } from './models/Nugget.js';
-import { Sandwich } from './models/Sandwich.js';
-import { TamanioPapa } from './models/TamanioPapa.js';
-import { Salsa } from './models/Salsa.js';
-import { Roll } from './models/Roll.js';
-import { MasVendidos } from './models/MasVendidos.js';
 import { Seccion } from './models/Seccion.js';
 import { Extra } from './models/Extra.js';
 import { Bebida } from './models/Bebida.js';
@@ -440,13 +433,53 @@ app.post("/bebida", async function(req, res){
     }
 });
 
+/*Combo*/
+app.get("/combo", async function(req, res){
+    const ldActivo = await Combo.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(ldActivo);
+});
 
+app.post("/combo", function(req, res){
+    const data = req.body;
+    if (data.nombre && data.img && data.descripcion && data.precio) {
+        const bebida = await Bebida.create(data);
+        res.status(200).json(bebida);
+    }else{
+        res.status(404).send("Error al crear el tipo de documento")
+    }
+});
 
+/*Extras*/
+app.get("/extras", async function(req, res){
+    const ldActivo = await Extra.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(ldActivo);
+});
 
+app.post("/extra", function(req, res){
 
+});
 
+/*Combo_Extra*/
+app.get("", function(req, res){
+    const ldActivo = await Combo.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(ldActivo);
+});
 
+app.post("/comboextra", function(req, res){
 
+});
 
 
 
