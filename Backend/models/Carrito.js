@@ -23,3 +23,23 @@ export const Carrito = sequelize.define(
     }
 );
 
+export const CarritoCombo = sequelize.define(
+    "CarritoCombo",{
+        estado:{
+            cantidad: DataTypes.INTEGER,
+            subtotal: DataTypes.FLOAT
+        },
+
+    },{
+        timestamps:false,
+        freezeTableName:true
+    }
+);
+
+Carrito.belongsToMany(Combo,{
+    through: CarritoCombo
+});
+
+Combo.belongsToMany(Carrito,{
+    through: CarritoCombo
+});

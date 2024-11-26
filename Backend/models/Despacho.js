@@ -8,7 +8,9 @@ export const Despacho = sequelize.define(
             primaryKey: true,
             autoIncrement: true
         },
+
         nombre: DataTypes.STRING,
+        
         estado:{
             type: DataTypes.BOOLEAN,
             defaultValue: true

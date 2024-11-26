@@ -21,6 +21,9 @@ export const Usuario = sequelize.define(
         contrasenia:{
             type: DataTypes.STRING
         },
+        numDocumento:{
+            type: DataTypes.STRING
+        },
         admin:{
             type: DataTypes.BOOLEAN,
             defaultValue:false

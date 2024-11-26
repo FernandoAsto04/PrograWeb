@@ -468,7 +468,7 @@ app.post("/extra", function(req, res){
 });
 
 /*Combo_Extra*/
-app.get("", function(req, res){
+app.get("", async function(req, res){
     const ldActivo = await Combo.findAll({
         where:{
             estado:true
