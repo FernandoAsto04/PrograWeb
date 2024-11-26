@@ -4,10 +4,13 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 
 const SidebarAdmin = () => {
+  const navigate = useNavigate(); // Hook para manejar la navegación
+
   return (
     <Drawer
       variant="permanent"
@@ -27,26 +30,34 @@ const SidebarAdmin = () => {
       </Toolbar>
       <Divider />
       <List>
-        <ListItem button>
+        {/* Dashboard */}
+        <ListItem button onClick={() => navigate('/admin')}>
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
-          <ListItemText primary="Dashboard" />
+          <ListItemText primary="Inicio" />
         </ListItem>
-        <ListItem button>
+
+        {/* Menú */}
+        <ListItem button onClick={() => navigate('/admin/combos')}>
           <ListItemIcon>
             <PeopleIcon />
           </ListItemIcon>
-          <ListItemText primary="Users" />
+          <ListItemText primary="Combos" />
         </ListItem>
-        <ListItem button>
+
+        {/* Locales */}
+        <ListItem button onClick={() => navigate('/admin/locales')}>
           <ListItemIcon>
             <SettingsIcon />
           </ListItemIcon>
-          <ListItemText primary="Settings" />
+          <ListItemText primary="Locales" />
         </ListItem>
+
         <Divider />
-        <ListItem button>
+
+        {/* Logout */}
+        <ListItem button onClick={() => navigate('/login')}>
           <ListItemIcon>
             <ExitToAppIcon />
           </ListItemIcon>

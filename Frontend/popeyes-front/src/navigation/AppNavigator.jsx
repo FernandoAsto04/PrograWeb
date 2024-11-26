@@ -9,6 +9,8 @@ import MenuScreen from '../modules/menu/screens/MenuScreen'
 import Principal from '../modules/X_Principal'
 import Pruebas from '../modules/X_Pruebas'
 import DashboardScreen from '../modules/admin/screens/DashboardScreem';
+import Locales_Admin from '../modules/admin/screens/Locales_Admin'
+import Combos_Admin from '../modules/admin/screens/Combos_Admin'
 
 function AppNavigator() {
     return (
@@ -20,6 +22,8 @@ function AppNavigator() {
             <Route path='/locales' element={<LocalesScreen/>}/>
             <Route path='/menu' element={<MenuScreen/>}/>
             <Route path='/admin' element={<DashboardScreen/>}/>
+            <Route path='/admin/locales' element={<Locales_Admin/>}/>
+            <Route path='/admin/combos' element={<Combos_Admin/>}/>
         </Routes>
     );
   }
