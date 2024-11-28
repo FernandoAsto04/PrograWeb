@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
-import { Documento } from "./Documento.js";
+import { Usuario } from "./Usuario.js";
 
 export const TipoDocumento = sequelize.define(
     "TipoDocumento",{
@@ -21,12 +21,12 @@ export const TipoDocumento = sequelize.define(
     }
 );
 
-TipoDocumento.hasMany(Documento, {
-    foreignKey: "tipodocumentoId",
-    sourceKey: "id"
+Usuario.belongsTo(TipoDocumento, {
+    foreignKey: "tipoDocid",
+    targetKey: "id"
 });
 
-Documento.belongsTo(TipoDocumento, {
-    foreignKey: "tipodocumentoId",
-    targetKey: "id"
+TipoDocumento.hasMany(Usuario, {
+    foreignKey: "tipoDocid",
+    sourceKey: "id"
 });

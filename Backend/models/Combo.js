@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database";
+import { Extra } from "./Extra.js";
 
 export const Combo = sequelize.define(
     "Combo", {
@@ -9,10 +10,10 @@ export const Combo = sequelize.define(
             autoIncrement: true
         },
         
-        nombre: DataTypes.INTEGER,
-        img: DataTypes.INTEGER,
-        descripcion:DataTypes.INTEGER,
-        precio:DataTypes.INTEGER,
+        nombre: DataTypes.STRING,
+        img: DataTypes.STRING,
+        descripcion:DataTypes.STRING,
+        precio:DataTypes.FLOAT,
         masvendido:DataTypes.BOOLEAN,
         
         estado: {
@@ -27,8 +28,15 @@ export const Combo = sequelize.define(
 
 export const Combo_Extra = sequelize.define(
     "Combo_Extra",{
+        id:{
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        seccion: DataTypes.STRING,
         estado:{
-            seccion: DataTypes.STRING
+            type: DataTypes.BOOLEAN,
+            defaultValue:true
         },
 
     },{

@@ -4,22 +4,17 @@ import { sequelize } from './database/database.js';
 
 
 import { Carrito } from './models/Carrito.js';
+import { Combo } from './models/Combo.js';
+import { Despacho } from './models/Despacho.js';
 import { Direccion } from './models/Direccion.js';
-import { Documento } from './models/Documento.js';
+import { Extra } from './models/Extra.js';
+import { Local, Local_Despacho } from './models/Local.js';
 import { MetodoPago } from './models/MetodoPago.js';
 import { Pago } from './models/Pago.js';
 import { Pedido } from './models/Pedido.js';
-import { Producto_Pedido } from './models/Producto_Pedido.js';
-import { Combo, Producto } from './models/Combo.js';
 import { TipoDocumento } from './models/TipoDocumento.js';
 import { TipoPedido } from './models/TipoPedido.js';
-import { TipoProducto } from './models/TipoProducto.js';
 import { Usuario } from './models/Usuario.js';
-import { Local, Local_Despacho } from './models/Local.js';
-import { Despacho } from './models/Despacho.js';
-import { Seccion } from './models/Seccion.js';
-import { Extra } from './models/Extra.js';
-import { Bebida } from './models/Bebida.js';
 
 const app = express();
 const port = 3002;
@@ -171,39 +166,6 @@ app.delete("/direcciones/:id", async function(req, res){
 });
 
 
-/*Documento*/
-app.get("/documentos", async function(req, res){
-    const docActivos = await Documento.findAll({
-        where:{
-            estado:true
-        }
-    });
-    res.status(200).json(docActivos);
-});
-
-app.get("/documentos/:id", async function(req, res){
-    const id = req.params.id;
-    const doc = await Documento.findByPk(id); //Sirve solo para buscar por ID
-    if (doc) {
-        res.status(200).json(doc);
-    }else{
-        res.status(404).send("Error al recuperar la direccion")
-    }
-});
-
-
-app.post("/documentos", async function(req, res){
-    const data = req.body;
-    if (data.numero) {
-        const nuevodoc = await Documento.create(data);
-        res.status(200).json(nuevodoc);
-    }else{
-        res.status(404).send("Error al crear el documento")
-    }
-});
-
-
-
 
 /*TipoDocumento*/
 
@@ -241,7 +203,7 @@ app.post("/tipodocumentos", async function(req, res){
         res.status(404).send("Error al crear el tipo de documento")
     }
 });
-
+/*
 app.post("/tipodocumentos/:id/documentos", async (req, res) =>{
     const datoDoc = req.body;
     const nuevoDoc = await Documento.create(datoDoc);
@@ -259,7 +221,7 @@ app.post("/pieza/:id/tamaniopapa/:id/bebida/:id/extra/:id/combo", async (req, re
     
     tipdoc.addDocumento(nuevoDoc);
     res.status(200).json(nuevoDoc);
-});
+});*/
 
 
 
@@ -400,17 +362,6 @@ app.post("/roll", async function(req, res){
     }
 });
 
-/*Seccion */
-app.post("/seccion", async function(req, res){
-    const data = req.body;
-    if (data.nombre) {
-        const seccion = await Seccion.create(data);
-        res.status(200).json(seccion);
-    }else{
-        res.status(404).send("Error al crear el tipo de documento")
-    }
-});
-
 /*Extra */
 app.post("/extra", async function(req, res){
     const data = req.body;
@@ -422,16 +373,6 @@ app.post("/extra", async function(req, res){
     }
 });
 
-/*Bebida */
-app.post("/bebida", async function(req, res){
-    const data = req.body;
-    if (data.nombre) {
-        const bebida = await Bebida.create(data);
-        res.status(200).json(bebida);
-    }else{
-        res.status(404).send("Error al crear el tipo de documento")
-    }
-});
 
 /*Combo*/
 app.get("/combo", async function(req, res){
@@ -442,8 +383,8 @@ app.get("/combo", async function(req, res){
     });
     res.status(200).json(ldActivo);
 });
-
-app.post("/combo", function(req, res){
+/*
+app.post("/combo", async function(req, res){
     const data = req.body;
     if (data.nombre && data.img && data.descripcion && data.precio) {
         const bebida = await Bebida.create(data);
@@ -451,7 +392,7 @@ app.post("/combo", function(req, res){
     }else{
         res.status(404).send("Error al crear el tipo de documento")
     }
-});
+});*/
 
 /*Extras*/
 app.get("/extras", async function(req, res){

@@ -21,7 +21,7 @@ export const TipoPedido = sequelize.define(
     }
 );
 
-//No se porque no funciona D:
+//No se porque no funciona D: // No se si ya funciona juju 
 TipoPedido.hasMany(Pedido, {
     foreignKey: "tipoPedidoid",
     sourceKey: "id"

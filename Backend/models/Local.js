@@ -25,11 +25,15 @@ export const Local = sequelize.define(
 
 export const Local_Despacho = sequelize.define(
     "Local_Despacho",{
+        id:{
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
         estado:{
             type: DataTypes.BOOLEAN,
             defaultValue: true
-        },
-
+        }
     },{
         timestamps:false,
         freezeTableName:true

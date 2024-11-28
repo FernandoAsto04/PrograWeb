@@ -1,5 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
+import { Combo } from "./Combo.js"
+import { Combo_Extra } from "./Combo.js";
 
 //Falta poner la FK
 export const Carrito = sequelize.define(
@@ -23,13 +25,14 @@ export const Carrito = sequelize.define(
     }
 );
 
-export const CarritoCombo = sequelize.define(
-    "CarritoCombo",{
-        estado:{
+const ComboCarrito = sequelize.define(
+    "ComboCarrito",{
             cantidad: DataTypes.INTEGER,
-            subtotal: DataTypes.FLOAT
-        },
-
+            subtotal: DataTypes.FLOAT,
+            estado: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true
+            }
     },{
         timestamps:false,
         freezeTableName:true
@@ -37,9 +40,19 @@ export const CarritoCombo = sequelize.define(
 );
 
 Carrito.belongsToMany(Combo,{
-    through: CarritoCombo
+    through: ComboCarrito
 });
 
 Combo.belongsToMany(Carrito,{
-    through: CarritoCombo
+    through: ComboCarrito
+});
+
+ComboCarrito.hasMany(Combo_Extra, {
+    foreignKey: "comboExtraId",
+    sourceKey: "id"
+});
+
+Combo_Extra.belongsTo(ComboCarrito, {
+    foreignKey: "comboExtraId",
+    targetKey: "id"
 });

@@ -1,5 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
+import { Carrito } from "./Carrito.js";
+
 // Así se crea un modelo, osea una tabla, se comporta de igual forma como el Modelo Relacional
 //Falta la FK Documento
 export const Usuario = sequelize.define(
@@ -9,21 +11,11 @@ export const Usuario = sequelize.define(
             primaryKey: true,
             autoIncrement: true
         },
-        nombres:{
-            type: DataTypes.STRING
-        },
-        apellidos:{
-            type: DataTypes.STRING
-        },
-        correo:{
-            type: DataTypes.STRING
-        },
-        contrasenia:{
-            type: DataTypes.STRING
-        },
-        numDocumento:{
-            type: DataTypes.STRING
-        },
+        nombres: DataTypes.STRING,
+        apellidos: DataTypes.STRING,
+        correo: DataTypes.STRING,
+        contrasenia: DataTypes.STRING,
+        numDocumento: DataTypes.STRING,
         admin:{
             type: DataTypes.BOOLEAN,
             defaultValue:false
@@ -36,3 +28,13 @@ export const Usuario = sequelize.define(
         freezeTableName: true //Para que se mantenga el nombre de la tabla
     }
 );
+
+Usuario.hasMany(Carrito, {
+    foreignKey: "usuarioId",
+    sourceKey: "id"
+});
+
+Carrito.belongsTo(Usuario, {
+    foreignKey: "usuarioId",
+    targetKey: "id"
+})

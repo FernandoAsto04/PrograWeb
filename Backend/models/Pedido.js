@@ -2,6 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../database/database.js";
 import { Usuario } from "./Usuario.js";
 import { Combo_Extra } from "./Combo.js";
+import { Local_Despacho } from "./Local.js";
 
 export const Pedido = sequelize.define(
     "Pedido",{
@@ -27,15 +28,17 @@ export const Pedido = sequelize.define(
 
 export const PedidoDetalle = sequelize.define(
     "PedidoDetalle",{
+        id:{
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        cantidad: DataTypes.INTEGER,
         estado:{
-            cantidad: DataTypes.INTEGER,
-            estado: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: true
-            }
-        },
-
-    },{
+          }
+    }, {
         timestamps:false,
         freezeTableName:true
     }
@@ -51,14 +54,22 @@ Combo_Extra.belongsToMany(Pedido,{
 
 
 
-
-
 Pedido.belongsTo(Usuario, {
-    foreignKey: "pedidoid",
+    foreignKey: "usuarioId",
     targetKey: "id"
 });
 
 Usuario.hasMany(Pedido, {
-    foreignKey: "pedidoid",
+    foreignKey: "usuarioId",
+    sourceKey: "id"
+});
+
+Pedido.belongsTo(Local_Despacho, {
+    foreignKey: "localesDespachoId",
+    targetKey: "id"
+});
+
+Local_Despacho.hasMany(Pedido, {
+    foreignKey: "localesDespachoId",
     sourceKey: "id"
 });
