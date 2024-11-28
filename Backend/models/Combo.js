@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../database/database";
+import { sequelize } from "../database/database.js";
 import { Extra } from "./Extra.js";
 
 export const Combo = sequelize.define(
@@ -25,6 +25,7 @@ export const Combo = sequelize.define(
         freezeTableName: true //Para que se mantenga el nombre de la tabla
     }
 );
+
 
 export const Combo_Extra = sequelize.define(
     "Combo_Extra",{

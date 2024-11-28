@@ -3,7 +3,6 @@ import { sequelize } from "../database/database.js";
 import { Combo } from "./Combo.js"
 import { Combo_Extra } from "./Combo.js";
 
-//Falta poner la FK
 export const Carrito = sequelize.define(
     "Carrito",{
         id:{
@@ -27,12 +26,17 @@ export const Carrito = sequelize.define(
 
 const ComboCarrito = sequelize.define(
     "ComboCarrito",{
-            cantidad: DataTypes.INTEGER,
-            subtotal: DataTypes.FLOAT,
-            estado: {
+        id:{
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        cantidad: DataTypes.INTEGER,
+        subtotal: DataTypes.FLOAT,
+        estado: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: true
-            }
+        }
     },{
         timestamps:false,
         freezeTableName:true
