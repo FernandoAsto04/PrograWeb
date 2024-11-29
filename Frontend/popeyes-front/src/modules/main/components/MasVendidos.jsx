@@ -9,7 +9,7 @@ function MasVendidos(){
                 <div>
                     <img src={mv}></img>
                     <h2>{mv}</h2>
-                    <p>{mv}}</p>
+                    <p>{mv}</p>
                     <button>Agregar al pedido</button> Creo que el botón se puede añadir en un useContext
                 </div>
             ))} 
