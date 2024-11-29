@@ -1,9 +1,10 @@
 import {useEffect, useState} from 'react';
-import Locales from '../components/Locales.jsx';
+import LocalForm from '../components/LocalForm.jsx';
+import ListaLocales from '../components/ListaLocales.jsx';
 import {
     obtenerLocales,
     crearLocal
-} from "../services/LocalesService.js"
+} from "../../locales/services/LocalesService.js"
 
 export default function LocalesScreen() {
     const [locales, setLocales] = useState([]); //Antes: publicaciones, setPublicaciones
@@ -25,7 +26,11 @@ export default function LocalesScreen() {
 
     return (
         <div>
-            <Locales
+            <h1>• Gestión de Locales</h1>
+            <LocalForm
+                agregarLocal={agregarLocal}
+            />
+            <ListaLocales
                 locales={locales}
             />
         </div>

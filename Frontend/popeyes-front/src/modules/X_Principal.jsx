@@ -13,7 +13,9 @@ export default function Principal() {
                 <li><Link to={`/admin`}>ADMIN</Link></li>
                 <li><Link to={`/admin/locales`}>ADMIN_LOCALES</Link></li>
                 <li><Link to={`/admin/combos`}>ADMIN_COMBOS</Link></li>
+
                 <li><Link to={`/pruebas`}>X_PRUEBAS</Link></li>
+                <li><Link to={`/prueba_froba_01`}>X_PRUEBA_FROBA_01</Link></li>
             </ul>
         </div>
     );
