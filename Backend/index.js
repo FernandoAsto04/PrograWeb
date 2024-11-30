@@ -5,7 +5,7 @@ import { Direccion } from './models/Direccion.js';
 import { TipoDocumento } from './models/TipoDocumento.js';
 import { MetodoPago } from './models/MetodoPago.js';
 import { Extra } from './models/Extra.js';
-import { Local } from './models/Local.js';
+import { Local, Local_Despacho } from './models/Local.js';
 import { Despacho } from './models/Despacho.js';
 import { TipoPedido } from './models/TipoPedido.js';
 
@@ -23,7 +23,7 @@ async function verificarConexion(){
     try {
         await sequelize.authenticate();
         console.log("Conexión a la DB exitosa")
-        await sequelize.sync(); //Sincroniza los cambios 
+        await sequelize.sync(/*{force:true}*/); //Sincroniza los cambios 
     } catch (error) {
         console.error("Ocurrió un error al conectarse a la DB", error)
     }
@@ -173,6 +173,26 @@ app.post("/tipopedido", async function(req, res){
     }else{
         res.status(404).send("Error al crear")
     }
+});
+
+
+//Locales_Despacho
+app.get("/localesdespacho", async function(req, res){
+    const locdesActivo = await Local_Despacho.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).send(locdesActivo)
+});
+
+app.post("/localesdespacho/:idLocal/:idDespacho", async function(req, res){
+    const local = await Local.findByPk(req.params.idLocal);
+    const despacho = await Despacho.findByPk(req.params.idDespacho);
+
+    await local.addDespacho(despacho);
+
+    res.status(200).send("Agregado exitosamente");
 });
 
 

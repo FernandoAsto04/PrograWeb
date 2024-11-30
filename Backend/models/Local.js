@@ -23,6 +23,7 @@ export const Local = sequelize.define(
     
 );
 
+//Relación muchos a muchos
 export const Local_Despacho = sequelize.define(
     "Local_Despacho",{
         id:{
