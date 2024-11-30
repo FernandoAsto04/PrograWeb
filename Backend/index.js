@@ -1,20 +1,16 @@
 import express, {json} from 'express';
 import cors from 'cors';
 import { sequelize } from './database/database.js';
-
-
-import { Carrito } from './models/Carrito.js';
-import { Combo } from './models/Combo.js';
-import { Despacho } from './models/Despacho.js';
 import { Direccion } from './models/Direccion.js';
+import { TipoDocumento } from './models/TipoDocumento.js';
+import { MetodoPago } from './models/MetodoPago.js';
 import { Extra } from './models/Extra.js';
 import { Local } from './models/Local.js';
-import { MetodoPago } from './models/MetodoPago.js';
-import { Pago } from './models/Pago.js';
-import { Pedido } from './models/Pedido.js';
-import { TipoDocumento } from './models/TipoDocumento.js';
+import { Despacho } from './models/Despacho.js';
 import { TipoPedido } from './models/TipoPedido.js';
-import { Usuario } from './models/Usuario.js';
+
+
+
 
 const app = express();
 const port = 3002;
@@ -33,91 +29,14 @@ async function verificarConexion(){
     }
 }
 
-//Usuarios/
-
-app.get("/usuarios", async function(req, res){
-    const usuariosActivos = await Usuario.findAll({
-        where:{
-            estado:true
-        }
-    });
-    res.status(200).json(usuariosActivos);
-});
-
-app.get("/usuarios/:id", async function(req, res){
-    const id = req.params.id;
-    const usuario = await Usuario.findByPk(id); //Sirve solo para buscar por ID
-    if (usuario) {
-        res.status(200).json(usuario);
-    }else{
-        res.status(404).send("Error al recuperar el usuario")
-    }
-})
-
-app.post("/usuarios", async function(req, res){
-    const data = req.body;
-    if (data.nombres && data.apellidos && data.correo && data.contrasenia) {
-        const nuevoUsu = await Usuario.create(data);
-        res.status(200).json(nuevoUsu);
-    }else{
-        res.status(404).send("Error al crear el usuario")
-    }
-});
-
-app.put("/usuarios/:id", async function(req, res){
-    const data = req.body;
-    try {
-        await Usuario.update(data, {
-            where: {
-                id: req.params.id
-            }
-        });
-        const usu = await Usuario.findOne({  //Es más amplio puede buscar por cualquier otro atributo, sirve como un filtro
-            where:{
-                id: req.params.id
-            }
-        });
-        res.status(200).json(usu);
-
-    } catch (error) {
-        res.status(404).send("Ocurrió un error durante la ejecución")
-    }
-});
-
-app.delete("/usuarios/:id", async function(req, res){
-    const id = req.params.id;
-    try {
-        await Usuario.update(
-            {estado:false}, {where: {id:id}});
-
-        const usu = await Usuario.findByPk(id);
-        res.status(200).json(usu);
-
-    } catch (error) {
-        res.status(404).send("Error al eliminar al usuario");
-    }
-});
-
-
-//Direccion/
-
+//Dirección
 app.get("/direcciones", async function(req, res){
-    const direccActivas = await Direccion.findAll({
+    const direcActiva = await Direccion.findAll({
         where:{
             estado:true
         }
     });
-    res.status(200).json(direccActivas);
-});
-
-app.get("/direcciones/:id", async function(req, res){
-    const id = req.params.id;
-    const direcc = await Direccion.findByPk(id); //Sirve solo para buscar por ID
-    if (direcc) {
-        res.status(200).json(direcc);
-    }else{
-        res.status(404).send("Error al recuperar la direccion")
-    }
+    res.status(200).json(direcActiva)
 });
 
 app.post("/direcciones", async function(req, res){
@@ -126,48 +45,13 @@ app.post("/direcciones", async function(req, res){
         const nuevaDirecc = await Direccion.create(data);
         res.status(200).json(nuevaDirecc);
     }else{
-        res.status(404).send("Error al crear el usuario")
-    }
-});
-
-app.put("/direcciones/:id", async function(req, res){
-    const data = req.body;
-    try {
-        await Direccion.update(data, {
-            where: {
-                id: req.params.id
-            }
-        });
-        const direcc = await Direccion.findOne({  //Es más amplio puede buscar por cualquier otro atributo, sirve como un filtro
-            where:{
-                id: req.params.id
-            }
-        });
-        res.status(200).json(direcc);
-
-    } catch (error) {
-        res.status(404).send("Ocurrió un error durante la ejecución")
-    }
-});
-
-app.delete("/direcciones/:id", async function(req, res){
-    const id = req.params.id;
-    try {
-        await Direccion.update(
-            {estado:false}, {where: {id:id}});
-
-        const direcc = await Direccion.findByPk(id);
-        res.status(200).json(direcc);
-
-    } catch (error) {
-        res.status(404).send("Error al eliminar la dirección");
+        res.status(404).send("Error al crear")
     }
 });
 
 
-//TipoDocumento/
-
-app.get("/tipodocumentos", async function(req, res){
+//TipoDocumento
+app.get("/tipodocumento", async function(req, res){
     const tipdocActivo = await TipoDocumento.findAll({
         where:{
             estado:true
@@ -176,74 +60,81 @@ app.get("/tipodocumentos", async function(req, res){
     res.status(200).json(tipdocActivo);
 });
 
-app.get("/comidas")
-
-app.get("/commidas/:id")
-
-
-
-app.get("/tipodocumentos/:id", async function(req, res){
-    const id = req.params.id;
-    const tipdo = await TipoDocumento.findByPk(id); //Sirve solo para buscar por ID
-    if (tipdo) {
-        res.status(200).json(tipdo);
-    }else{
-        res.status(404).send("Error al recuperar la direccion")
-    }
-});
-
-app.post("/tipodocumentos", async function(req, res){
+app.post("/tipodocumento", async function(req, res){
     const data = req.body;
     if (data.nombre) {
-        const ntipodoc = await TipoDocumento.create(data);
-        res.status(200).json(ntipodoc);
+        const nuevotipdoc = await TipoDocumento.create(data);
+        res.status(200).json(nuevotipdoc);
     }else{
-        res.status(404).send("Error al crear el tipo de documento")
+        res.status(404).send("Error al crear")
     }
 });
 
-/*
-app.post("/tipodocumentos/:id/documentos", async (req, res) =>{
-    const datoDoc = req.body;
-    const nuevoDoc = await Documento.create(datoDoc);
-    const tipdoc = await TipoDocumento.findByPk(req.params.id);
-    
-    tipdoc.addDocumento(nuevoDoc);
-    res.status(200).json(nuevoDoc);
-});
 
-app.post("/pieza/:id/tamaniopapa/:id/bebida/:id/extra/:id/combo", async (req, res) =>{
-    const datoDoc = req.body;
-    const nuevoDoc = await Documento.create(datoDoc);
-    
-    const tipdoc = await TipoDocumento.findByPk(req.params.id);
-    
-    tipdoc.addDocumento(nuevoDoc);
-    res.status(200).json(nuevoDoc);
-});*/
-
-
-//Local/
-app.get("/locales", async function(req, res){
-    const localesActivos = await Local.findAll({
+//MetodoPago
+app.get("/metodopago", async function(req, res){
+    const metopagoActivo = await MetodoPago.findAll({
         where:{
             estado:true
         }
     });
-    res.status(200).json(localesActivos);
+    res.send(200).json(metopagoActivo)
+});
+
+app.post("/metodopago", async function(req, res){
+    const data = req.body;
+    if (data.nombre) {
+        const nuevometpago = await MetodoPago.create(data);
+        res.status(200).json(nuevometpago);
+    }else{
+        res.status(404).send("Error al crear")
+    }
+});
+
+
+//Extras
+app.get("/extras", async function(req, res){
+    const extraActivo = await Extra.findAll({
+        where: {
+            estado:true
+        }
+    });
+    res.status(200).json(extraActivo);
+});
+
+app.post("/extras", async function(req, res){
+    const data = req.body;
+    if (data.nombre && data.tipo) {
+        const nuevoExtra = await Extra.create(data);
+        res.status(200).json(nuevoExtra);
+    }else{
+        res.status(404).send("Error al crear")
+    }
+});
+
+
+//Locales
+app.get("/locales", async function(req, res){
+    const localActivo = await Local.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(localActivo);
 });
 
 app.post("/locales", async function(req, res){
     const data = req.body;
     if (data.nombre && data.direccion && data.telefono) {
-        const local = await Local.create(data);
-        res.status(200).json(local);
+        const nuevoLocal = await Local.create(data);
+        res.status(200).json(nuevoLocal);
     }else{
-        res.status(404).send("Error al crear el tipo de documento")
+        res.status(404).send("Error al crear")
     }
 });
 
-//*Despacho */
+
+//Despacho
 app.get("/despacho", async function(req, res){
     const despachoActivo = await Despacho.findAll({
         where:{
@@ -256,168 +147,35 @@ app.get("/despacho", async function(req, res){
 app.post("/despacho", async function(req, res){
     const data = req.body;
     if (data.nombre) {
-        const despacho = await Despacho.create(data);
-        res.status(200).json(despacho);
+        const nuevoDespacho = await Despacho.create(data);
+        res.status(200).json(nuevoDespacho);
     }else{
-        res.status(404).send("Error al crear el tipo de documento")
+        res.status(404).send("Error al crear")
     }
 });
 
-//*Locales_Despacho */
 
-app.get("/localdespacho", async function(req, res){
-    const ldActivo = await Local_Despacho.findAll({
+//Tipo Pedido
+app.get("/tipopedido", async function(req, res){
+    const tipedidoActivo = await TipoPedido.findAll({
         where:{
             estado:true
         }
     });
-    res.status(200).json(ldActivo);
+    res.status(200).json(tipedidoActivo);
 });
 
-app.post("/localdespacho", async (req, res) => {
-    const { localId, despachosIds } = req.body;
-
-    try {
-        // Asignar los despachos al local directamente
-        const local = await Local.findByPk(localId);
-        const despachos = await Despacho.findAll({ where: { id: despachosIds } });
-
-        await local.setDespachos(despachos); // Sobrescribe los despachos actuales
-
-        res.status(200).json({ message: "Despachos asignados correctamente." });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Ocurrió un error al asignar los despachos.");
-    }
-});
-
-//*Pieza */
-app.post("/pieza", async function(req, res){
-    const data = req.body;
-    if (data.nombre && data.cantidad) {
-        const pieza = await Pieza.create(data);
-        res.status(200).json(pieza);
-    }else{
-        res.status(404).send("Error al crear el tipo de documento")
-    }
-});
-
-//*Nugget */
-app.post("/nugget", async function(req, res){
-    const data = req.body;
-    if (data.nombre && data.cantidad) {
-        const nugget = await Nugget.create(data);
-        res.status(200).json(nugget);
-    }else{
-        res.status(404).send("Error al crear el tipo de documento")
-    }
-});
-
-//*Sandwich */
-app.post("/sandwich", async function(req, res){
-    const data = req.body;
-    if (data.nombre && data.cantidad) {
-        const sand = await Sandwich.create(data);
-        res.status(200).json(sand);
-    }else{
-        res.status(404).send("Error al crear el tipo de documento")
-    }
-});
-
-//*TamanioPapa */
-app.post("/tamaniopapa", async function(req, res){
+app.post("/tipopedido", async function(req, res){
     const data = req.body;
     if (data.nombre) {
-        const tamanio = await TamanioPapa.create(data);
-        res.status(200).json(tamanio);
+        const nuevotipedido = await TipoPedido.create(data);
+        res.status(200).json(nuevotipedido);
     }else{
-        res.status(404).send("Error al crear el tipo de documento")
-    }
-});
-
-//*Salsa */
-app.post("/salsa", async function(req, res){
-    const data = req.body;
-    if (data.nombre) {
-        const salsa = await Salsa.create(data);
-        res.status(200).json(salsa);
-    }else{
-        res.status(404).send("Error al crear el tipo de documento")
+        res.status(404).send("Error al crear")
     }
 });
 
 
-
-//*Roll */
-app.post("/roll", async function(req, res){
-    const data = req.body;
-    if (data.nombre && data.cantidad) {
-        const roll = await Roll.create(data);
-        res.status(200).json(roll);
-    }else{
-        res.status(404).send("Error al crear el tipo de documento")
-    }
-});
-
-//*Extra */
-app.post("/extra", async function(req, res){
-    const data = req.body;
-    if (data.nombre) {
-        const extra = await Extra.create(data);
-        res.status(200).json(extra);
-    }else{
-        res.status(404).send("Error al crear el tipo de documento")
-    }
-});
-
-
-//Combo/
-app.get("/combo", async function(req, res){
-    const ldActivo = await Combo.findAll({
-        where:{
-            estado:true
-        }
-    });
-    res.status(200).json(ldActivo);
-});
-/*
-app.post("/combo", async function(req, res){
-    const data = req.body;
-    if (data.nombre && data.img && data.descripcion && data.precio) {
-        const bebida = await Bebida.create(data);
-        res.status(200).json(bebida);
-    }else{
-        res.status(404).send("Error al crear el tipo de documento")
-    }
-});*/
-
-//Extras/
-app.get("/extras", async function(req, res){
-    const ldActivo = await Extra.findAll({
-        where:{
-            estado:true
-        }
-    });
-    res.status(200).json(ldActivo);
-});
-
-app.post("/extra", function(req, res){
-
-});
-
-//Combo_Extra/
-app.get("", async function(req, res){
-    const ldActivo = await Combo.findAll({
-        where:{
-            estado:true
-        }
-    });
-    res.status(200).json(ldActivo);
-});
-
-app.post("/comboextra", function(req, res){
-
-});
 
 app.listen(port,()=> {
     console.log("Servidor activo en el puerto " + port);
