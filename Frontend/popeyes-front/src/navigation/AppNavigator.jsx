@@ -5,6 +5,7 @@ import {Routes, Route} from 'react-router-dom';
 //IMPORT - COMPONENTES
 import Principal from '../modules/main/screens/Principal';
 import Login from '../modules/auth/screens/LoginScreen';
+import SignUp from '../modules/auth/screens/SignUpScreen';
 import MisPedidos from '../modules/mispedidos/screens/MisPedidosScreen';
 import Locales from '../modules/locales/screens/LocalesScreen';
 import Menu from '../modules/menu/screens/MenuScreen';
@@ -29,6 +30,7 @@ export default function AppNavigator() {
             <Route path='/' element={<X_Principal/>}/> {/* Aquí debería ir el Principal elaborado por Fernando, de momento esta así para ir más rápido */}
             <Route path='/principal' element={<Principal/>}/>
             <Route path='/login' element={<Login/>}/>
+            <Route path='/signup' element={<SignUp/>}/>
             <Route path='/mispedidos' element={<MisPedidos/>}/>
             <Route path='/locales' element={<Locales/>}/>
             <Route path='/menu' element={<Menu/>}/>
