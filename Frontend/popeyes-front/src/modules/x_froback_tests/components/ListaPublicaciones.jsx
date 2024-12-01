@@ -1,4 +1,4 @@
-const ListaPublicaciones = ({ publicaciones, eliminarPublicacion, prepararEdicion }) => {
+export default function Lista_Publicaciones({ publicaciones, eliminarPublicacion, prepararEdicion }) {
     return (
         <ul>
             {publicaciones.map((publicacion, index) => (
@@ -14,4 +14,3 @@ const ListaPublicaciones = ({ publicaciones, eliminarPublicacion, prepararEdicio
     );
 };
 
-export default ListaPublicaciones;

@@ -1,14 +1,14 @@
 import {useEffect, useState} from 'react';
-import PublicacionForm from '../components/X_PublicacionForm.jsx';
-import ListaPublicaciones from '../components/X_ListaPublicaciones.jsx';
+import Form_Publicaciones from '../components/FormPublicaciones.jsx';
+import Lista_Publicaciones from '../components/ListaPublicaciones.jsx';
 import {
     actualizarPublicacion,
     crearPublicacion,
     eliminarPublicacion,
     obtenerPublicaciones
-} from "../services/X_publicacionesService.js"
+} from "../services/PublicacionesService.js"
 
-export default function X_Prueba_Froba_01() {
+export default function PublicacionesScreen() {
     const [publicaciones, setPublicaciones] = useState([]);
     const [publicacionEditable, setPublicacionEditable] = useState(null); // Para editar publicaciones
 
@@ -49,12 +49,12 @@ export default function X_Prueba_Froba_01() {
     return (
         <div>
             <h1>Gestión de Publicaciones</h1>
-            <PublicacionForm
+            <Form_Publicaciones
                 agregarPublicacion={agregarPublicacion}
                 publicacionEditable={publicacionEditable} // Pasamos la publicación a editar
                 actualizarPublicacion={actualizarUnaPublicacion}
             />
-            <ListaPublicaciones
+            <Lista_Publicaciones
                 publicaciones={publicaciones}
                 eliminarPublicacion={eliminarUnaPublicacion}
                 prepararEdicion={prepararEdicion} // Pasamos la función para preparar edición

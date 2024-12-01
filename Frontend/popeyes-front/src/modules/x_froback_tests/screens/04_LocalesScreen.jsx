@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
-import LocalForm from '../components/LocalForm.jsx';
-import ListaLocales from '../components/ListaLocales.jsx';
+import FormLocales from '../components/04_FormLocales.jsx';
+import ListaLocales from '../components/04_ListaLocales.jsx';
 import {
     obtenerLocales,
     crearLocal
-} from "../../locales/services/LocalesService.js"
+} from "../services/04_LocalServices.js"
 
 export default function LocalesScreen() {
     const [locales, setLocales] = useState([]); //Antes: publicaciones, setPublicaciones
@@ -18,16 +18,16 @@ export default function LocalesScreen() {
     }, []);
 
     const agregarLocal = async (nuevoLocal) => {
-        const publicacionCreada = await crearLocal(nuevoLocal);
-        if(publicacionCreada){
-            setLocales([...locales, publicacionCreada]);
+        const usuarioCreado = await crearLocal(nuevoLocal);
+        if(usuarioCreado){
+            setLocales([...locales, usuarioCreado]);
         }
     };
 
     return (
         <div>
             <h1>• Gestión de Locales</h1>
-            <LocalForm
+            <FormLocales
                 agregarLocal={agregarLocal}
             />
             <ListaLocales

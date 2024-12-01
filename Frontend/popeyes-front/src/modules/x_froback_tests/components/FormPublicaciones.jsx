@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const PublicacionForm = ({ agregarPublicacion, publicacionEditable, actualizarPublicacion }) => {
+export default function Form_Publicaciones({ agregarPublicacion, publicacionEditable, actualizarPublicacion }) {
     const [titulo, setTitulo] = useState('');
     const [contenido, setContenido] = useState('');
     const [autor, setAutor] = useState('');
@@ -56,5 +56,3 @@ const PublicacionForm = ({ agregarPublicacion, publicacionEditable, actualizarPu
         </form>
     );
 };
-
-export default PublicacionForm;

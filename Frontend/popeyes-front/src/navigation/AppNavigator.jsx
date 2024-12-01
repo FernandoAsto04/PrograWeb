@@ -15,9 +15,15 @@ import Combos_Admin from '../modules/admin/screens/Combos_Admin';
 
 import X_Principal from '../modules/X_Principal';
 import X_Pruebas from '../modules/X_Pruebas';
-import X_Prueba_Froba_01 from '../modules/x_froback_tests/screens/X_Prueba_Froba_01';
 
-function AppNavigator() {
+import X_UsuariosScreen from '../modules/x_froback_tests/screens/01_UsuariosScreen';
+import X_DireccionScreen from '../modules/x_froback_tests/screens/02_DireccionScreen';
+import X_TipoDocumentoScreen from '../modules/x_froback_tests/screens/03_TipoDocumentoScreen';
+import X_LocalesScreen from '../modules/x_froback_tests/screens/04_LocalesScreen';
+import X_DespachosScreen from '../modules/x_froback_tests/screens/05_DespachoScreen';
+import X_LocalesDespachosScreen from '../modules/x_froback_tests/screens/06_LocalesDespachoScreen';
+
+export default function AppNavigator() {
     return (
         <Routes>
             <Route path='/' element={<X_Principal/>}/> {/* Aquí debería ir el Principal elaborado por Fernando, de momento esta así para ir más rápido */}
@@ -32,9 +38,12 @@ function AppNavigator() {
             <Route path='/admin/combos' element={<Combos_Admin/>}/>
 
             <Route path='/pruebas' element={<X_Pruebas/>}/>
-            <Route path='/prueba_froba_01' element={<X_Prueba_Froba_01/>}/>
+            <Route path='/prueba_01_UsuariosScreen' element={<X_UsuariosScreen/>}/>
+            <Route path='/prueba_02_DireccionScreen' element={<X_DireccionScreen/>}/>
+            <Route path='/prueba_03_TipoDocumentoScreen' element={<X_TipoDocumentoScreen/>}/>
+            <Route path='/prueba_04_LocalesScreen' element={<X_LocalesScreen/>}/>
+            <Route path='/prueba_05_DespachosScreen' element={<X_DespachosScreen/>}/>
+            <Route path='/prueba_06_LocalesDespachoScreen' element={<X_LocalesDespachosScreen/>}/>
         </Routes>
     );
   }
-  
-  export default AppNavigator;

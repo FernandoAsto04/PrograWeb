@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const LocalForm = ({ agregarLocal }) => {
+export default function FormLocales({ agregarLocal }) {
     const [nombre, setNombre] = useState('');       //Antes: titulo, setTitulo
     const [direccion, setDireccion] = useState(''); //Antes: contenido, setContenido
     const [telefono, setTelefono] = useState('');         //Antes: autor, setAutor
@@ -38,10 +38,8 @@ const LocalForm = ({ agregarLocal }) => {
                 onChange={(e) => setTelefono(e.target.value)}
             />
             <button type="submit">
-                {'Crear Publicación'}
+                {'Crear Local'}
             </button>
         </form>
     );
 };
-
-export default LocalForm;
