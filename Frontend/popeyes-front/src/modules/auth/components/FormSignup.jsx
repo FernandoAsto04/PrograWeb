@@ -1,46 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Typography,
   TextField,
   Button,
-  Select,
   MenuItem,
   InputAdornment,
   IconButton,
-  Checkbox,
-  FormControlLabel,
   Box,
   Divider,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { obtenerTipoDocumentos } from '../services/TipoDocumentoServices';
 
 export default function FormSignup({ onSubmit }) {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     nombres: '',
     apellidos: '',
-    tipoDocumento: '',
-    numDocumento: '',
-    telefono: '',
     correo: '',
     contrasenia: '',
-    confirmarContrasenia: '',
-    aceptarPromociones: false,
-    aceptarTerminos: false,
+    numDocumento: '',
+    numeroCel: '',
+    tipoDocid: '',
+    admin: false
   });
+
+  const [confirmarContrasenia, setConfirmarContrasenia] = useState('');
+  const [errorContrasenia, setErrorContrasenia] = useState(false);
+  const [tipoDocumentos, setTipoDocumentos] = useState([]);
+
+  useEffect(() => {
+    const fetchTipoDocumentos = async () => {
+      const documentos = await obtenerTipoDocumentos();
+      if (documentos) {
+        setTipoDocumentos(documentos);
+      }
+    };
+    fetchTipoDocumentos();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleCheckboxChange = (e) => {
-    const { name, checked } = e.target;
-    setFormData({ ...formData, [name]: checked });
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (formData.contrasenia !== confirmarContrasenia) {
+      setErrorContrasenia(true);
+      return;
+    }
+
+    setErrorContrasenia(false);
     onSubmit(formData);
   };
 
@@ -79,15 +91,17 @@ export default function FormSignup({ onSubmit }) {
         <TextField
           select
           label="Tipo de Documento"
-          name="tipoDocumento"
-          value={formData.tipoDocumento}
+          name="tipoDocid"
+          value={formData.tipoDocid}
           onChange={handleInputChange}
           required
           fullWidth
         >
-          <MenuItem value="DNI">DNI</MenuItem>
-          <MenuItem value="Pasaporte">Pasaporte</MenuItem>
-          <MenuItem value="Carnet de Extranjería">Carnet de Extranjería</MenuItem>
+          {tipoDocumentos.map((doc) => (
+            <MenuItem key={doc.id} value={doc.id}>
+              {doc.nombre}
+            </MenuItem>
+          ))}
         </TextField>
         <TextField
           label="Documento"
@@ -103,8 +117,8 @@ export default function FormSignup({ onSubmit }) {
       <TextField
         label="Número de teléfono"
         placeholder="Ej. 987654321"
-        name="telefono"
-        value={formData.telefono}
+        name="numeroCel"
+        value={formData.numeroCel}
         onChange={handleInputChange}
         required
         fullWidth
@@ -148,15 +162,16 @@ export default function FormSignup({ onSubmit }) {
       />
 
       <TextField
-        label="Confirmar contraseña"
+        label="Confirmar Contraseña"
         placeholder="Aa12345"
         type={showPassword ? 'text' : 'password'}
-        name="confirmarContrasenia"
-        value={formData.confirmarContrasenia}
-        onChange={handleInputChange}
+        value={confirmarContrasenia}
+        onChange={(e) => setConfirmarContrasenia(e.target.value)}
         required
         fullWidth
         sx={{ mb: 2 }}
+        error={errorContrasenia} 
+        helperText={errorContrasenia ? 'Las contraseñas no coinciden' : ''}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -167,30 +182,6 @@ export default function FormSignup({ onSubmit }) {
           ),
         }}
       />
-
-      <Box sx={{ mb: 2 }}>
-        <FormControlLabel
-          control={
-            <Checkbox
-              name="aceptarPromociones"
-              checked={formData.aceptarPromociones}
-              onChange={handleCheckboxChange}
-            />
-          }
-          label="Acepto recibir promociones y novedades"
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              name="aceptarTerminos"
-              checked={formData.aceptarTerminos}
-              onChange={handleCheckboxChange}
-              required
-            />
-          }
-          label="Acepto la transferencia de datos a empresas asociadas"
-        />
-      </Box>
 
       <Button
         type="submit"

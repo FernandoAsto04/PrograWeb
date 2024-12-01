@@ -1,9 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ThemeProvider, createTheme, Container, Card, Typography } from '@mui/material';
+import { ThemeProvider, createTheme, Container, Card } from '@mui/material';
 import SignupForm from '../components/FormSignup';
+import { crearUsuario } from '../services/UsuariosServices';
 
-export default function Register_Screen() {
+export default function SignupScreen() {
   const customTheme = createTheme({
     typography: {
       fontFamily: 'Open Sans, Helvetica Neue',
@@ -18,19 +19,15 @@ export default function Register_Screen() {
 
   const handleRegister = async (formData) => {
     try {
-      const response = await fetch('/api/usuarios', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+      const usuarioCreado = await crearUsuario(formData);
 
-      if (response.ok) {
+      if (usuarioCreado) {
         navigate('/login');
       } else {
-        console.error('Error en el registro:', response.statusText);
+        console.error('Error en el registro: No se pudo crear el usuario');
       }
     } catch (error) {
-      console.error('Error al conectarse al servidor:', error);
+      console.error('Error al registrar usuario:', error);
     }
   };
 

@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3002/usuarios';
+const API_URL = 'http://localhost:3002/usuario';
 
 export const obtenerUsuarios = async () => {
     try{
@@ -30,31 +30,5 @@ export const crearUsuario = async (usuario) => {
         return await response.json();
     }catch(error){
         console.error("Error al crear usuario");
-    }
-}
-
-export const actualizarUsuario = async (id, usuarioActualizado) =>{
-    try{
-        const response = await fetch(`${API_URL}/${id}`,{
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(usuarioActualizado),
-        })
-        return await response.json();
-    }catch(error){
-        console.error("Error al editar usuario");
-    }
-}
-
-export const eliminarUsuario = async (id) => {
-    try{
-        const response = await fetch(`${API_URL}/${id}`,{
-            method: 'DELETE',
-        })
-        return await response.json();
-    }catch(error){
-        console.error("Error eliminando usuario")
     }
 }

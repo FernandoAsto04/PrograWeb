@@ -1,5 +1,6 @@
 import express, {json} from 'express';
 import cors from 'cors';
+import bcrypt from 'bcrypt';
 import { sequelize } from './database/database.js';
 import { Direccion, Usuario_Direccion } from './models/Direccion.js';
 import { TipoDocumento } from './models/TipoDocumento.js';
@@ -363,24 +364,66 @@ app.get("/usuario", async function (req, res){
 });
 
 
-app.post("/tipodocumento/:id/usuario", async function(req, res){
+/*app.post("/tipodocumento/:id/usuario", async function(req, res){
     const data = req.body;
     const nuevousuario = await Usuario.create(data);
     const tipodoc = await TipoDocumento.findByPk(req.params.id);
     tipodoc.addUsuario(nuevousuario);
     res.status(200).json(nuevousuario);
+});*/
+
+// SIGNUP
+app.post('/usuario', async (req, res) => {
+    try {
+        const { contrasenia, tipoDocid, ...usuarioData } = req.body;
+
+        if (!tipoDocid || isNaN(tipoDocid)) {
+            return res.status(400).json({ error: 'El campo tipoDocid es requerido y debe ser un número válido' });
+        }
+
+        const tipoDocumento = await TipoDocumento.findByPk(tipoDocid);
+        if (!tipoDocumento) {
+            return res.status(404).json({ error: 'Tipo de documento no encontrado' });
+        }
+
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(contrasenia, saltRounds);
+
+        const nuevoUsuario = await Usuario.create({
+            ...usuarioData,
+            contrasenia: hashedPassword,
+            tipoDocid,
+        });
+
+        res.status(201).json(nuevoUsuario);
+    } catch (error) {
+        console.error('Error al crear usuario:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
 });
 
+// LOGIN
+app.post('/login', async (req, res) => {
+    try {
+        const { correo, contrasenia } = req.body;
 
+        const usuario = await Usuario.findOne({ where: { correo } });
+        if (!usuario) {
+            return res.status(401).json({ error: 'Credenciales inválidas' });
+        }
 
-
-
-
-
-
-
-
-
+        const passwordMatch = await bcrypt.compare(contrasenia, usuario.contrasenia);
+        if (!passwordMatch) {
+            return res.status(401).json({ error: 'Credenciales inválidas' });
+        }
+        
+        // Si las credenciales son válidas, proceder (por ejemplo, generar un token)
+        res.status(200).json({ message: 'Inicio de sesión exitoso', usuario });
+    } catch (error) {
+        console.error('Error en el login:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
 
 
 //MetodoPago

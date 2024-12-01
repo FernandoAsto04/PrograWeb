@@ -17,13 +17,11 @@ export default function LoginForm({ onSubmit, onForgotPassword }) {
     contrasenia: '',
   });
 
-  // Manejar cambios en los campos de entrada
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Manejar el envío del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData);

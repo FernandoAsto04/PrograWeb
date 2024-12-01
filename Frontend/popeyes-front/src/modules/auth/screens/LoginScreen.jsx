@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeProvider, createTheme, Container, Box, Card, Typography, Button } from '@mui/material';
 import LoginForm from '../components/FormLogin';
+import { loginUsuario } from '../services/LoginServices';
 
 export default function Login_Screen() {
   const customTheme = createTheme({
@@ -16,31 +17,22 @@ export default function Login_Screen() {
 
   const navigate = useNavigate();
 
-  // Manejar el inicio de sesión
   const handleLogin = async (formData) => {
     try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        navigate('/'); // Redirigir a la página principal
-      } else {
-        console.error('Error en el inicio de sesión:', response.statusText);
-      }
+      const response = await loginUsuario(formData);
+      console.log('Inicio de sesión exitoso:', response);
+      
+      navigate('/');
     } catch (error) {
-      console.error('Error al conectarse al servidor:', error);
+      console.error('Error en el inicio de sesión:', error.message);
+      alert('Credenciales inválidas. Por favor, verifica tu correo y contraseña.');
     }
   };
 
-  // Manejar "Olvidé mi contraseña"
   const handleForgotPassword = () => {
-    navigate('/forgot-password');
+    navigate('/');
   };
 
-  // Navegar a la página de registro
   const handleCreateAccount = () => {
     navigate('/signup');
   };
@@ -58,7 +50,6 @@ export default function Login_Screen() {
         }}
       >
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-evenly', flexDirection: { xs: 'column', sm: 'row' } }}>
-          {/*|| • COLUMNA 01 - INICIAR SESIÓN • ||*/}
           <Card
             sx={{
               width: { xs: '100%', sm: '40%' },
@@ -75,8 +66,7 @@ export default function Login_Screen() {
             </Typography>
             <LoginForm onSubmit={handleLogin} onForgotPassword={handleForgotPassword} />
           </Card>
-
-          {/*|| • COLUMNA 02 - CREAR CUENTA • ||*/}
+          
           <Card
             sx={{
               minWidth: { xs: '100%', sm: '60%' },
@@ -107,8 +97,18 @@ export default function Login_Screen() {
             <Button
               variant="contained"
               onClick={handleCreateAccount}
-              sx={{ py: '12px', px: '20px', textTransform: 'none' }}
+              sx={{
+                py: '12px',
+                px: '20px',
+                textTransform: 'none',
+                width: '100%',
+                backgroundColor: 'rgb(255, 51, 0)',
+                borderRadius: '50px',
+                boxShadow: 'none',
+                '&:hover': { backgroundColor: 'rgba(255, 51, 0, 0.8)', boxShadow: 'none' },
+              }}
             >
+              <Typography variant="h4">Crear cuenta</Typography>
             </Button>
           </Card>
         </Box>
