@@ -1,7 +1,7 @@
 import express, {json} from 'express';
 import cors from 'cors';
 import { sequelize } from './database/database.js';
-import { Direccion } from './models/Direccion.js';
+import { Direccion, Usuario_Direccion } from './models/Direccion.js';
 import { TipoDocumento } from './models/TipoDocumento.js';
 import { MetodoPago } from './models/MetodoPago.js';
 import { Extra } from './models/Extra.js';
@@ -32,7 +32,7 @@ async function verificarConexion(){
 }
 
 //Dirección
-app.get("/direcciones", async function(req, res){
+app.get("/direccion", async function(req, res){
     const direcActiva = await Direccion.findAll({
         where:{
             estado:true
@@ -41,7 +41,7 @@ app.get("/direcciones", async function(req, res){
     res.status(200).json(direcActiva)
 });
 
-app.post("/direcciones", async function(req, res){
+app.post("/direccion", async function(req, res){
     const data = req.body;
     if (data.nombre) {
         const nuevaDirecc = await Direccion.create(data);
@@ -49,6 +49,24 @@ app.post("/direcciones", async function(req, res){
     }else{
         res.status(404).send("Error al crear")
     }
+});
+
+//Usuario_Direccion
+app.get("/usuariodireccion", async function(req, res){
+    const usudirecActivo = await Usuario_Direccion.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(usudirecActivo);
+});
+
+app.post("/usuariodireccion/:idUsuario/:idDireccion", async function(req, res){
+    const usuario = await Usuario.findByPk(req.params.idUsuario);
+    const direccion = await Direccion.findByPk(req.params.idDireccion);
+    await usuario.addDireccion(direccion);
+
+    res.status(200).send("Agregado de forma exitosa")
 });
 
 
@@ -79,10 +97,10 @@ app.get("/usuario", async function (req, res){
         where:{
             estado:true
         }
-    })
+    });
+    res.status(200).json(usuariosActivos);
 });
 
-//HACER BIEN EL POST PARA INGRESAR A LOS USUARIOS CON SU TIPDOC
 
 app.post("/tipodocumento/:id/usuario", async function(req, res){
     const data = req.body;
