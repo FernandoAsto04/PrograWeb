@@ -25,7 +25,7 @@ async function verificarConexion(){
     try {
         await sequelize.authenticate();
         console.log("Conexión a la DB exitosa")
-        await sequelize.sync({force:true}); //Sincroniza los cambios 
+        await sequelize.sync(/*{force:true}*/); //Sincroniza los cambios 
     } catch (error) {
         console.error("Ocurrió un error al conectarse a la DB", error)
     }
@@ -124,6 +124,10 @@ app.post("/metodopago", async function(req, res){
 });
 
 
+
+
+
+
 //Pago
 app.get("/pago", async function(req, res){
     const pagoActivo = await Pago.findAll({
@@ -134,30 +138,15 @@ app.get("/pago", async function(req, res){
     res.status(200).json(pagoActivo);
 });
 
-
-app.post("/pago/:idmetpago", async function (req, res) {
-    try {
-        const data = req.body;
-
-        // Buscar el método de pago por su ID
-        const metodoPago = await MetodoPago.findByPk(req.params.idmetpago);
-        if (!metodoPago) {
-            return res.status(404).json({ error: "Método de pago no encontrado" });
-        }
-
-        // Crear el nuevo pago
-        const nuevoPago = await Pago.create(data);
-
-        // Asociar el pago al método de pago
-        await metodoPago.addPago(nuevoPago);
-
-        // Responder con el nuevo pago
-        res.status(200).json(nuevoPago);
-    } catch (error) {
-        console.error(error);
-        res.status(404).json({ error: "Error interno del servidor" });
-    }
+app.post("/metodopago/:id/pago", async function(req, res){
+    const data = req.body;
+    const nuevopago = await Pago.create(data);
+    const metodopago = await MetodoPago.findByPk(req.params.id);
+    metodopago.addPago(nuevopago);
+    res.status(200).json(nuevopago)
 });
+
+
 
 
 

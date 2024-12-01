@@ -22,13 +22,3 @@ export const Pago = sequelize.define(
     }
 );
 
-Pedido.hasMany(Pago, {
-    foreignKey: "pedidoId",
-    sourceKey: "id"
-}); 
-
-Pago.belongsTo(Pedido, {
-    foreignKey: "pedidoId",
-    targetKey: "id"
-});
-

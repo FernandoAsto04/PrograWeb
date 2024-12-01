@@ -54,6 +54,8 @@ Combo_Extra.belongsToMany(Pedido,{
 
 
 
+
+
 Pedido.belongsTo(Usuario, {
     foreignKey: "usuarioId",
     targetKey: "id"
