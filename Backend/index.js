@@ -156,7 +156,25 @@ app.get("/pedidodetalle", async function (req, res) {
     res.status(200).json(pedidodetalleActivo);
 });
 
-app.post("/pedidodetalle/:idPedido/:idComboExtra")
+app.post("/pedidodetalle/:idPedido/:idComboExtra/:cantidad", async function(req, res){
+    try {
+        const pedido = await Pedido.findByPk(req.params.idPedido);
+        const comboextra = await Combo_Extra.findByPk(req.params.idComboExtra);
+
+        await PedidoDetalle.create({
+            cantidad: req.params.cantidad,
+            PedidoId: pedido.id,
+            ComboExtraId: comboextra.id
+        });
+
+        res.status(200).send("Agregado correctamente")
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Hubo un error al agregar el pedidodetalle");
+    }
+});
+
+
 
 
 
@@ -169,6 +187,60 @@ app.get("/pedido", async function(req, res){
     });
     res.status(200).json(pedidoActivo);
 });
+
+
+app.post("/pedido/:idTipoPedido/:idUsuario/:idLocalDespacho/:idPago", async function(req, res) {
+    try {
+        // Desestructurar datos del cuerpo de la solicitud (req.body)
+        const { total, fecha_creacion, fecha_actualizacion, numPedido } = req.body;
+
+        // Verificar que los valores necesarios estén presentes
+        if (!total || !fecha_creacion || !fecha_actualizacion) {
+            return res.status(400).json({ message: "Faltan datos obligatorios en la solicitud." });
+        }
+
+        // Obtener las relaciones de las tablas por los parámetros de la URL
+        const tipopedido = await TipoPedido.findByPk(req.params.idTipoPedido);
+        const usuario = await Usuario.findByPk(req.params.idUsuario);
+        const localdespacho = await Local_Despacho.findByPk(req.params.idLocalDespacho);
+        const pago = await Pago.findByPk(req.params.idPago);
+
+       
+
+        // Crear el nuevo pedido
+        const nuevoPedido = await Pedido.create({
+            total,
+            fecha_creacion,
+            fecha_actualizacion,
+            numPedido,
+            usuarioId: usuario.id,      // Cambiar de idUsuario a usuarioId
+            localesDespachoId: localdespacho.id, // Cambiar de idLocalDespacho a localesDespachoId
+            tipopedidoId: tipopedido.id, // Cambiar de idTipoPedido a tipopedidoId
+            pagoId: pago.id             // Cambiar de idPago a pagoId
+        });
+        
+
+        // Responder con éxito
+        res.status(201).json({ message: "Pedido creado exitosamente", nuevoPedido });
+
+    } catch (error) {
+        // Manejo de errores
+        console.error(error);
+        res.status(500).json({ message: "Error al crear el pedido", error: error.message });
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -297,7 +369,7 @@ app.post("/metodopago/:id/pago", async function(req, res){
 
 
 //Extras
-app.get("/extras", async function(req, res){
+app.get("/extra", async function(req, res){
     const extraActivo = await Extra.findAll({
         where: {
             estado:true
@@ -306,7 +378,7 @@ app.get("/extras", async function(req, res){
     res.status(200).json(extraActivo);
 });
 
-app.post("/extras", async function(req, res){
+app.post("/extra", async function(req, res){
     const data = req.body;
     if (data.nombre && data.tipo) {
         const nuevoExtra = await Extra.create(data);
@@ -318,7 +390,7 @@ app.post("/extras", async function(req, res){
 
 
 //Locales
-app.get("/locales", async function(req, res){
+app.get("/local", async function(req, res){
     const localActivo = await Local.findAll({
         where:{
             estado:true
@@ -327,7 +399,7 @@ app.get("/locales", async function(req, res){
     res.status(200).json(localActivo);
 });
 
-app.post("/locales", async function(req, res){
+app.post("/local", async function(req, res){
     const data = req.body;
     if (data.nombre && data.direccion && data.telefono) {
         const nuevoLocal = await Local.create(data);
