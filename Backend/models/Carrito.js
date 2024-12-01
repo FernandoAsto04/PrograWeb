@@ -24,7 +24,7 @@ export const Carrito = sequelize.define(
     }
 );
 
-const ComboCarrito = sequelize.define(
+export const ComboCarrito = sequelize.define(
     "ComboCarrito",{
         id:{
             type: DataTypes.INTEGER,
@@ -51,6 +51,8 @@ Combo.belongsToMany(Carrito,{
     through: ComboCarrito
 });
 
+
+//Relación entre combocaarrito y comboextra
 ComboCarrito.hasMany(Combo_Extra, {
     foreignKey: "comboExtraId",
     sourceKey: "id"

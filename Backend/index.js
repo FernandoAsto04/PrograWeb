@@ -10,7 +10,7 @@ import { Despacho } from './models/Despacho.js';
 import { TipoPedido } from './models/TipoPedido.js';
 import { Usuario } from './models/Usuario.js';
 import { Pago } from './models/Pago.js';
-import { Carrito } from './models/Carrito.js';
+import { Carrito, ComboCarrito } from './models/Carrito.js';
 import { Combo, Combo_Extra } from './models/Combo.js';
 import { Pedido, PedidoDetalle } from './models/Pedido.js';
 
@@ -142,6 +142,69 @@ app.post("/comboextra/:idCombo/:idExtra/:seccion", async function(req, res) {
 
 
 //ComboCarrito
+app.get("/combocarrito", async function(req, res){
+    const combocarritoActivos = await ComboCarrito.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(combocarritoActivos);
+})
+
+app.post("/combocarrito/:idCarrito/:idCombo/:idComboExtra/:cantidad/:subtotal", async (req, res) => {
+    try {
+        const { idCarrito, idCombo, idComboExtra, cantidad, subtotal } = req.params;
+
+        // Buscar los modelos correspondientes
+        const carrito = await Carrito.findByPk(idCarrito);
+        const combo = await Combo.findByPk(idCombo);
+        const comboextra = await Combo_Extra.findByPk(idComboExtra);
+
+        // Verificar si los registros existen
+        if (!carrito || !combo || !comboextra) {
+            return res.status(404).send("Carrito, Combo o ComboExtra no encontrado");
+        }
+
+        // Crear un nuevo ComboCarrito
+        const nuevoComboCarrito = await ComboCarrito.create({
+            carritoId: carrito.id,
+            comboId: combo.id,
+            cantidad: parseInt(cantidad),
+            subtotal: parseFloat(subtotal)
+        });
+
+        return res.status(201).json({
+            message: 'ComboCarrito creado exitosamente',
+            data: nuevoComboCarrito
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send("Ocurrió un error");
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
