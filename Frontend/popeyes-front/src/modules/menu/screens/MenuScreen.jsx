@@ -152,7 +152,7 @@ export default function Menu_Screen() {
                     {producto.precio_antiguo}
                   </Typography>
                   
-                  <Button variant="contained" color="secondary"> Agregar al pedido </Button>
+                  <Button variant="contained" color="secondary"><Link to={`/agregar_pedido`}>Agregar Pedido</Link></Button>
                 </Box>
 
               </Card>
