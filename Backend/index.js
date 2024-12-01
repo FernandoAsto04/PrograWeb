@@ -84,12 +84,13 @@ app.get("/usuario", async function (req, res){
 
 //HACER BIEN EL POST PARA INGRESAR A LOS USUARIOS CON SU TIPDOC
 
-
-
-
-
-
-
+app.post("/tipodocumento/:id/usuario", async function(req, res){
+    const data = req.body;
+    const nuevousuario = await Usuario.create(data);
+    const tipodoc = await TipoDocumento.findByPk(req.params.id);
+    tipodoc.addUsuario(nuevousuario);
+    res.status(200).json(nuevousuario);
+});
 
 
 
@@ -122,9 +123,6 @@ app.post("/metodopago", async function(req, res){
         res.status(404).send("Error al crear")
     }
 });
-
-
-
 
 
 
@@ -246,6 +244,18 @@ app.get("/localesdespacho", async function(req, res){
         }
     });
     res.status(200).send(locdesActivo)
+});
+
+app.get("/localesdespacho/:id", async function (req, res){
+    const id = req.params.id;
+    const localdespacho = await Local_Despacho.findByPk(req.params.id);
+    if (localdespacho){
+
+        res.status(200).json(localdespacho);
+    }else{
+        res.status(404).send("Error en la busqueda")
+    }
+
 });
 
 app.post("/localesdespacho/:idLocal/:idDespacho", async function(req, res){
