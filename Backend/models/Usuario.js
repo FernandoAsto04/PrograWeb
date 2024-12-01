@@ -15,9 +15,9 @@ export const Usuario = sequelize.define(
         correo: DataTypes.STRING,
         contrasenia: DataTypes.STRING,
         numDocumento: DataTypes.STRING,
+        numeroCel: DataTypes.STRING,
         admin:{
             type: DataTypes.BOOLEAN,
-            defaultValue:false
         },
         estado:{
             type: DataTypes.BOOLEAN,

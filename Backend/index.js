@@ -8,6 +8,8 @@ import { Extra } from './models/Extra.js';
 import { Local, Local_Despacho } from './models/Local.js';
 import { Despacho } from './models/Despacho.js';
 import { TipoPedido } from './models/TipoPedido.js';
+import { Usuario } from './models/Usuario.js';
+import { Pago } from './models/Pago.js';
 
 
 
@@ -23,7 +25,7 @@ async function verificarConexion(){
     try {
         await sequelize.authenticate();
         console.log("Conexión a la DB exitosa")
-        await sequelize.sync(/*{force:true}*/); //Sincroniza los cambios 
+        await sequelize.sync({force:true}); //Sincroniza los cambios 
     } catch (error) {
         console.error("Ocurrió un error al conectarse a la DB", error)
     }
@@ -71,6 +73,36 @@ app.post("/tipodocumento", async function(req, res){
 });
 
 
+//Usuario
+app.get("/usuario", async function (req, res){
+    const usuariosActivos = await Usuario.findAll({
+        where:{
+            estado:true
+        }
+    })
+});
+
+//HACER BIEN EL POST PARA INGRESAR A LOS USUARIOS CON SU TIPDOC
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //MetodoPago
 app.get("/metodopago", async function(req, res){
     const metopagoActivo = await MetodoPago.findAll({
@@ -78,7 +110,7 @@ app.get("/metodopago", async function(req, res){
             estado:true
         }
     });
-    res.send(200).json(metopagoActivo)
+    res.status(200).json(metopagoActivo)
 });
 
 app.post("/metodopago", async function(req, res){
@@ -90,6 +122,47 @@ app.post("/metodopago", async function(req, res){
         res.status(404).send("Error al crear")
     }
 });
+
+
+//Pago
+app.get("/pago", async function(req, res){
+    const pagoActivo = await Pago.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(pagoActivo);
+});
+
+
+app.post("/pago/:idmetpago", async function (req, res) {
+    try {
+        const data = req.body;
+
+        // Buscar el método de pago por su ID
+        const metodoPago = await MetodoPago.findByPk(req.params.idmetpago);
+        if (!metodoPago) {
+            return res.status(404).json({ error: "Método de pago no encontrado" });
+        }
+
+        // Crear el nuevo pago
+        const nuevoPago = await Pago.create(data);
+
+        // Asociar el pago al método de pago
+        await metodoPago.addPago(nuevoPago);
+
+        // Responder con el nuevo pago
+        res.status(200).json(nuevoPago);
+    } catch (error) {
+        console.error(error);
+        res.status(404).json({ error: "Error interno del servidor" });
+    }
+});
+
+
+
+
+
 
 
 //Extras
@@ -194,6 +267,7 @@ app.post("/localesdespacho/:idLocal/:idDespacho", async function(req, res){
 
     res.status(200).send("Agregado exitosamente");
 });
+
 
 
 

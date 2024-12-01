@@ -11,7 +11,7 @@ export const Pago = sequelize.define(
         },
 
         monto: DataTypes.FLOAT,
-        fecha: DataTypes.DATE,
+        fecha: DataTypes.DATEONLY,
         
         estado: {
             type: DataTypes.BOOLEAN,
