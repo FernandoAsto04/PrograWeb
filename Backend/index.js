@@ -170,45 +170,7 @@ app.get("/pedido", async function(req, res){
     res.status(200).json(pedidoActivo);
 });
 
-app.post("/pedido/:idTipoPedido/:idUsuario/:idLocalDespacho/:idPago", async function(req, res) {
-    try {
-        // Desestructurar datos del cuerpo de la solicitud (req.body)
-        const { total, fecha_creacion, fecha_actualizacion, numPedido } = req.body;
 
-        // Verificar que los valores necesarios estén presentes
-        if (!total || !fecha_creacion || !fecha_actualizacion) {
-            return res.status(400).json({ message: "Faltan datos obligatorios en la solicitud." });
-        }
-
-        // Obtener las relaciones de las tablas por los parámetros de la URL
-        const tipopedido = await TipoPedido.findByPk(req.params.idTipoPedido);
-        const usuario = await Usuario.findByPk(req.params.idUsuario);
-        const localdespacho = await Local_Despacho.findByPk(req.params.idLocalDespacho);
-        const pago = await Pago.findByPk(req.params.idPago);
-
-       
-
-        // Crear el nuevo pedido
-        const nuevoPedido = await Pedido.create({
-            total,
-            fecha_creacion,
-            fecha_actualizacion,
-            numPedido,
-            idTipoPedido: tipopedido.id, 
-            idUsuario: usuario.id, 
-            idLocalDespacho: localdespacho.id, 
-            idPago: pago.id
-        });
-
-        // Responder con éxito
-        res.status(201).json({ message: "Pedido creado exitosamente", nuevoPedido });
-
-    } catch (error) {
-        // Manejo de errores
-        console.error(error);
-        res.status(500).json({ message: "Error al crear el pedido", error: error.message });
-    }
-});
 
 
 
