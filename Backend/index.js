@@ -10,6 +10,9 @@ import { Despacho } from './models/Despacho.js';
 import { TipoPedido } from './models/TipoPedido.js';
 import { Usuario } from './models/Usuario.js';
 import { Pago } from './models/Pago.js';
+import { Carrito } from './models/Carrito.js';
+import { Combo, Combo_Extra } from './models/Combo.js';
+import { Pedido, PedidoDetalle } from './models/Pedido.js';
 
 
 
@@ -68,6 +71,167 @@ app.post("/usuariodireccion/:idUsuario/:idDireccion", async function(req, res){
 
     res.status(200).send("Agregado de forma exitosa")
 });
+
+//Carrito
+app.get("/carrito", async function(req, res){
+    const carritoActivo = await Carrito.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(carritoActivo);
+});
+
+app.post("/usuario/:id/carrito", async function(req,res){
+    const data = req.body;
+    const nuevocarrito = await Carrito.create(data);
+    const usuario = await Usuario.findByPk(req.params.id);
+    usuario.addCarrito(nuevocarrito);
+    res.status(200).json(nuevocarrito);
+});
+
+//Combo
+app.get("/combo", async function(req, res){
+    const comboActivo = await Combo.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(comboActivo);
+});
+
+app.post("/combo", async function (req, res) {
+   const data = req.body;
+   if(data.nombre && data.img && data.descripcion && data.precio && data.masvendido){
+    const nuevoCombo = await Combo.create(data);
+    res.status(200).json(nuevoCombo);
+   }else{
+    res.status(400).send("Error al crear el combo")
+   } 
+});
+
+//ComboExtra
+
+app.get("/comboextra", async function (req, res){
+    const comboextrActivo = await Combo_Extra.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(comboextrActivo);
+});
+
+app.post("/comboextra/:idCombo/:idExtra/:seccion", async function(req, res) {
+    try {
+        const combo = await Combo.findByPk(req.params.idCombo);
+        const extra = await Extra.findByPk(req.params.idExtra);
+
+        // Agregar Extra al Combo con la sección
+        await Combo_Extra.create({
+            ComboId: combo.id,
+            ExtraId: extra.id,
+            seccion: req.params.seccion
+        });
+
+        res.status(200).send("Se agregó el comboextra con éxito");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Hubo un error al agregar el comboextra");
+    }
+});
+
+
+//ComboCarrito
+
+
+
+
+//PedidoDetalle
+app.get("/pedidodetalle", async function (req, res) {
+    const pedidodetalleActivo = await PedidoDetalle.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(pedidodetalleActivo);
+});
+
+app.post("/pedidodetalle/:idPedido/:idComboExtra")
+
+
+
+//Pedido
+app.get("/pedido", async function(req, res){
+    const pedidoActivo = await Pedido.findAll({
+        where:{
+            estado:true
+        }
+    });
+    res.status(200).json(pedidoActivo);
+});
+
+app.post("/pedido/:idTipoPedido/:idUsuario/:idLocalDespacho/:idPago", async function(req, res) {
+    try {
+        // Desestructurar datos del cuerpo de la solicitud (req.body)
+        const { total, fecha_creacion, fecha_actualizacion, numPedido } = req.body;
+
+        // Verificar que los valores necesarios estén presentes
+        if (!total || !fecha_creacion || !fecha_actualizacion) {
+            return res.status(400).json({ message: "Faltan datos obligatorios en la solicitud." });
+        }
+
+        // Obtener las relaciones de las tablas por los parámetros de la URL
+        const tipopedido = await TipoPedido.findByPk(req.params.idTipoPedido);
+        const usuario = await Usuario.findByPk(req.params.idUsuario);
+        const localdespacho = await Local_Despacho.findByPk(req.params.idLocalDespacho);
+        const pago = await Pago.findByPk(req.params.idPago);
+
+       
+
+        // Crear el nuevo pedido
+        const nuevoPedido = await Pedido.create({
+            total,
+            fecha_creacion,
+            fecha_actualizacion,
+            numPedido,
+            idTipoPedido: tipopedido.id, 
+            idUsuario: usuario.id, 
+            idLocalDespacho: localdespacho.id, 
+            idPago: pago.id
+        });
+
+        // Responder con éxito
+        res.status(201).json({ message: "Pedido creado exitosamente", nuevoPedido });
+
+    } catch (error) {
+        // Manejo de errores
+        console.error(error);
+        res.status(500).json({ message: "Error al crear el pedido", error: error.message });
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //TipoDocumento

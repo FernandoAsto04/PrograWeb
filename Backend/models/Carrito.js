@@ -12,8 +12,8 @@ export const Carrito = sequelize.define(
         },
 
         total: DataTypes.FLOAT,
-        fecha_creacion: DataTypes.DATE,
-        fecha_actualizacion: DataTypes.DATE,
+        fecha_creacion: DataTypes.DATEONLY,
+        fecha_actualizacion: DataTypes.DATEONLY,
 
         estado:{
             type: DataTypes.BOOLEAN,

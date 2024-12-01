@@ -3,6 +3,8 @@ import { sequelize } from "../database/database.js";
 import { Usuario } from "./Usuario.js";
 import { Combo_Extra } from "./Combo.js";
 import { Local_Despacho } from "./Local.js";
+import { TipoPedido } from "./TipoPedido.js";
+import { Pago } from "./Pago.js";
 
 export const Pedido = sequelize.define(
     "Pedido",{
@@ -13,8 +15,8 @@ export const Pedido = sequelize.define(
         },
 
         total: DataTypes.FLOAT,
-        fecha_creacion: DataTypes.DATE,
-        fecha_actualizacion: DataTypes.DATE,
+        fecha_creacion: DataTypes.DATEONLY,
+        fecha_actualizacion: DataTypes.DATEONLY,
         numPedido: DataTypes.STRING,
         
         estado: {
@@ -55,7 +57,7 @@ Combo_Extra.belongsToMany(Pedido,{
 
 
 
-
+//Relación con usuario
 Pedido.belongsTo(Usuario, {
     foreignKey: "usuarioId",
     targetKey: "id"
@@ -66,6 +68,8 @@ Usuario.hasMany(Pedido, {
     sourceKey: "id"
 });
 
+
+//Relación con local_despacho
 Pedido.belongsTo(Local_Despacho, {
     foreignKey: "localesDespachoId",
     targetKey: "id"
@@ -75,3 +79,16 @@ Local_Despacho.hasMany(Pedido, {
     foreignKey: "localesDespachoId",
     sourceKey: "id"
 });
+
+//relación con tipopedido
+Pedido.belongsTo(TipoPedido,{
+    foreignKey: "tipopedidoId",
+    targetKey: "id"
+});
+
+TipoPedido.hasMany(Pedido,{
+    foreignKey: "tipopedidoId",
+    sourceKey: "id"
+});
+
+

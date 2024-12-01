@@ -22,3 +22,13 @@ export const Pago = sequelize.define(
     }
 );
 
+//Relación con Pago
+Pedido.belongsTo(Pago,{
+    foreignKey: "pagoId",
+    targetKey: "id"
+})
+
+Pago.hasMany(Pedido, {
+    foreignKey: "pagoId",
+    sourceKey: "id"
+});
