@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, CssBaseline, Toolbar } from '@mui/material';
 import Sidebar from '../components/SidebarAdmin';
-import Navbar from '../components/NavBarAdmin';
+import Navbar from '../components/NavbarAdmin';
 
 const DashboardScreen = () => {
   return (

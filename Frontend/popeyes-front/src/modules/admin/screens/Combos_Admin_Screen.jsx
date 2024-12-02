@@ -13,24 +13,19 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import Sidebar from "../components/SidebarAdmin";
-import Navbar from "../components/NavbarAdmin";
+import Sidebar from '../components/SidebarAdmin';
+import Navbar from '../components/NavbarAdmin';
 import { useNavigate } from "react-router-dom";
-import { obtenerCombos } from "../services/combo/ComboServices";
+import { obtenerCombos, desactivarCombo } from "../services/combo/ComboServices";
 
-const Combos = () => {
+const CombosAdmin = () => {
   const [combos, setCombos] = useState([]);
   const navigate = useNavigate();
 
-  // Función para obtener los combos del backend
   const fetchCombos = async () => {
     try {
       const data = await obtenerCombos();
-      if (Array.isArray(data)) {
-        setCombos(data);
-      } else {
-        console.error("Los datos obtenidos no son válidos:", data);
-      }
+      setCombos(data);
     } catch (error) {
       console.error("Error al obtener los combos:", error);
     }
@@ -40,32 +35,30 @@ const Combos = () => {
     fetchCombos();
   }, []);
 
-  // Simular la lógica de eliminación
-  const deleteCombo = (id) => {
-    if (window.confirm("¿Estás seguro de que deseas eliminar este combo?")) {
-      console.log("Desactivando combo con ID:", id);
-      // Aquí puedes agregar la lógica de eliminación del backend
+  const deleteCombo = async (id) => {
+    if (window.confirm("¿Estás seguro de que deseas desactivar este combo?")) {
+      try {
+        const mensaje = await desactivarCombo(id);
+        console.log(mensaje);
+        fetchCombos();
+      } catch (error) {
+        console.error("Error al desactivar el combo:", error);
+      }
     }
   };
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-
-      {/* Navbar */}
       <Navbar />
-
-      {/* Sidebar */}
       <Sidebar />
-
-      {/* Contenido principal */}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
           bgcolor: "background.default",
           p: 3,
-          marginLeft: "240px", // Asegurar que no se superponga al sidebar
+          marginLeft: "240px",
         }}
       >
         <Toolbar />
@@ -80,8 +73,7 @@ const Combos = () => {
         >
           Registrar Combo
         </Button>
-
-        {/* Tabla de Combos */}
+        
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
@@ -97,10 +89,16 @@ const Combos = () => {
             <TableBody>
               {combos.map((combo) => (
                 <TableRow key={combo.id}>
-                  <TableCell>{combo.nombre || "Sin nombre"}</TableCell>
-                  <TableCell>{combo.descripcion || "Sin descripción"}</TableCell>
-                  <TableCell>{combo.precio ? `$${combo.precio}` : "Sin precio"}</TableCell>
-                  <TableCell>{combo.img || "Sin imagen"}</TableCell>
+                  <TableCell>{combo.nombre}</TableCell>
+                  <TableCell>{combo.descripcion}</TableCell>
+                  <TableCell>{combo.precio ? `S/ ${combo.precio}` : "Sin precio"}</TableCell>
+                  <TableCell>
+                    <img
+                      src={combo.img}
+                      alt={combo.nombre}
+                      style={{ width: "100px", height: "auto", borderRadius: "8px" }}
+                    />
+                  </TableCell>
                   <TableCell>{combo.estado ? "Activo" : "Inactivo"}</TableCell>
                   <TableCell>
                     <Button
@@ -129,4 +127,4 @@ const Combos = () => {
   );
 };
 
-export default Combos;
+export default CombosAdmin;

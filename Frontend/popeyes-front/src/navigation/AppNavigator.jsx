@@ -12,7 +12,7 @@ import Menu from '../modules/menu/screens/MenuScreen';
 import AgregarPedido from '../modules/agregar_pedido/screens/AgregarPedidoScreen'
 import Dashboard from '../modules/admin/screens/DashboardScreen';
 import Combos_Admin from '../modules/admin/screens/Combos_Admin_Screen';
-
+import Combos_Admin_Detalle from '../modules/admin/screens/Combos_Admin_Detalle'
 import X_Principal from '../modules/X_Principal';
 import X_Pruebas from '../modules/X_Pruebas';
 
@@ -35,7 +35,10 @@ export default function AppNavigator() {
             <Route path='/menu' element={<Menu/>}/>
             <Route path='/agregar_pedido' element={<AgregarPedido/>}/>
             <Route path='/admin' element={<Dashboard/>}/>
-            <Route path='/admin/combos' element={<Combos_Admin/>}/>
+
+            <Route path="/admin/combos" element={<Combos_Admin />} />
+            <Route path="/admin/combos/new" element={<Combos_Admin_Detalle />} />
+            <Route path="/admin/combos/edit/:id" element={<Combos_Admin_Detalle />} />
 
             <Route path='/pruebas' element={<X_Pruebas/>}/>
             <Route path='/prueba_01_UsuariosScreen' element={<X_UsuariosScreen/>}/>

@@ -102,16 +102,43 @@ app.get("/combo", async function(req, res){
 });
 
 // Crear Combo
-app.post("/combo", async function (req, res) {
-   const data = req.body;
-   if(data.nombre && data.img && data.descripcion && data.precio && data.masvendido){
-    const nuevoCombo = await Combo.create(data);
-    res.status(200).json(nuevoCombo);
-   }else{
-    res.status(400).send("Error al crear el combo")
-   } 
+app.post('/combo', async (req, res) => {
+    try {
+        const { nombre, descripcion, precio, img, masvendido } = req.body;
+        if (!nombre || !descripcion || !precio || !img || masvendido === undefined) {
+            return res.status(400).json({ error: 'Faltan datos obligatorios' });
+        }
+        const nuevoCombo = await Combo.create({
+            nombre,
+            descripcion,
+            precio,
+            img,
+            masvendido,
+        });
+        res.status(201).json(nuevoCombo);
+    } catch (error) {
+        console.error('Error al crear combo:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
 });
 
+
+// Combo especifico
+app.get("/combo/:id", async function (req, res) {
+    const { id } = req.params;
+    try {
+        const combo = await Combo.findByPk(id);
+        if (combo) {
+            res.status(200).json(combo);
+        } else {
+            res.status(404).send("Combo no encontrado");
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error al obtener el combo");
+    }
+ });
+ 
 // Actualizar un combo
 app.put("/combo/:id", async function (req, res) {
     const { id } = req.params;

@@ -9,6 +9,18 @@ export const obtenerCombos = async () => {
     }
 };
 
+export const obtenerCombo = async (id) => {
+    try {
+        const response = await fetch(`${API_URL}/${id}`);
+        if (!response.ok) {
+            throw new Error(`Error al obtener el combo con ID ${id}: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error al obtener el combo:", error);
+    }
+};
+
 export const crearCombo = async (combo) => {
     try {
         const response = await fetch(API_URL, {
@@ -18,9 +30,15 @@ export const crearCombo = async (combo) => {
             },
             body: JSON.stringify(combo),
         });
+
+        if (!response.ok) {
+            throw new Error('Error al crear combo');
+        }
+
         return await response.json();
     } catch (error) {
-        console.error("Error al crear combo:", error);
+        console.error('Error al crear combo:', error);
+        throw error;
     }
 };
 
