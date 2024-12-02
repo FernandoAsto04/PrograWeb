@@ -1,21 +1,50 @@
-import React from "react";
-import { Box, CssBaseline, Toolbar, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
-import Sidebar from '../components/SidebarAdmin';
-import Navbar from '../components/NavBarAdmin';
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  CssBaseline,
+  Toolbar,
+  Typography,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
+import Sidebar from "../components/SidebarAdmin";
+import Navbar from "../components/NavbarAdmin";
 import { useNavigate } from "react-router-dom";
-
-const combos = [
-  { id: 1, nombre: "Combo 1", descripcion: "El combo 1 incluye...", precio: "45.9", img: 'aaaa', estado: true },
-  { id: 2, nombre: "Combo 2", descripcion: "El combo 2 incluye...", precio: "89.9", img: 'bbbb', estado: false },
-];
+import { obtenerCombos } from "../services/combo/ComboServices";
 
 const Combos = () => {
+  const [combos, setCombos] = useState([]);
   const navigate = useNavigate();
 
-  const deleteLocal = (id) => {
-    if (window.confirm("¿Estás seguro de que deseas eliminar este local?")) {
-      // Lógica para eliminar el local
-      console.log("Eliminando local con ID:", id);
+  // Función para obtener los combos del backend
+  const fetchCombos = async () => {
+    try {
+      const data = await obtenerCombos();
+      if (Array.isArray(data)) {
+        setCombos(data);
+      } else {
+        console.error("Los datos obtenidos no son válidos:", data);
+      }
+    } catch (error) {
+      console.error("Error al obtener los combos:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCombos();
+  }, []);
+
+  // Simular la lógica de eliminación
+  const deleteCombo = (id) => {
+    if (window.confirm("¿Estás seguro de que deseas eliminar este combo?")) {
+      console.log("Desactivando combo con ID:", id);
+      // Aquí puedes agregar la lógica de eliminación del backend
     }
   };
 
@@ -36,7 +65,7 @@ const Combos = () => {
           flexGrow: 1,
           bgcolor: "background.default",
           p: 3,
-          marginLeft: "240px", // Ancho del sidebar para que no se sobreponga
+          marginLeft: "240px", // Asegurar que no se superponga al sidebar
         }}
       >
         <Toolbar />
@@ -58,7 +87,7 @@ const Combos = () => {
             <TableHead>
               <TableRow>
                 <TableCell><b>Nombre</b></TableCell>
-                <TableCell><b>Descripcion</b></TableCell>
+                <TableCell><b>Descripción</b></TableCell>
                 <TableCell><b>Precio</b></TableCell>
                 <TableCell><b>Imagen</b></TableCell>
                 <TableCell><b>Estado</b></TableCell>
@@ -68,10 +97,10 @@ const Combos = () => {
             <TableBody>
               {combos.map((combo) => (
                 <TableRow key={combo.id}>
-                  <TableCell>{combo.nombre}</TableCell>
-                  <TableCell>{combo.descripcion}</TableCell>
-                  <TableCell>{combo.precio}</TableCell>
-                  <TableCell>{combo.img}</TableCell>
+                  <TableCell>{combo.nombre || "Sin nombre"}</TableCell>
+                  <TableCell>{combo.descripcion || "Sin descripción"}</TableCell>
+                  <TableCell>{combo.precio ? `$${combo.precio}` : "Sin precio"}</TableCell>
+                  <TableCell>{combo.img || "Sin imagen"}</TableCell>
                   <TableCell>{combo.estado ? "Activo" : "Inactivo"}</TableCell>
                   <TableCell>
                     <Button
@@ -85,7 +114,7 @@ const Combos = () => {
                     <Button
                       variant="outlined"
                       color="error"
-                      onClick={() => deleteLocal(combo.id)}
+                      onClick={() => deleteCombo(combo.id)}
                     >
                       Eliminar
                     </Button>

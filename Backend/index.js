@@ -91,7 +91,7 @@ app.post("/usuario/:id/carrito", async function(req,res){
     res.status(200).json(nuevocarrito);
 });
 
-//Combo
+// Ver Combos
 app.get("/combo", async function(req, res){
     const comboActivo = await Combo.findAll({
         where:{
@@ -101,6 +101,7 @@ app.get("/combo", async function(req, res){
     res.status(200).json(comboActivo);
 });
 
+// Crear Combo
 app.post("/combo", async function (req, res) {
    const data = req.body;
    if(data.nombre && data.img && data.descripcion && data.precio && data.masvendido){
@@ -111,8 +112,45 @@ app.post("/combo", async function (req, res) {
    } 
 });
 
-//ComboExtra
+// Actualizar un combo
+app.put("/combo/:id", async function (req, res) {
+    const { id } = req.params;
+    const data = req.body;
 
+    try {
+        const combo = await Combo.findByPk(id);
+
+        if (!combo) {
+            return res.status(404).send("Combo no encontrado");
+        }
+        const comboActualizado = await combo.update(data);
+        res.status(200).json(comboActualizado);
+    } catch (error) {
+        console.error("Error al actualizar el combo:", error);
+        res.status(500).json({ error: "Error al actualizar el combo" });
+    }
+});
+
+// Eliminar un combo
+app.delete("/combo/:id", async function (req, res) {
+    const { id } = req.params;
+
+    try {
+        const combo = await Combo.findByPk(id);
+
+        if (!combo) {
+            return res.status(404).send("Combo no encontrado");
+        }
+
+        await combo.update({ estado: false });
+        res.status(200).send("Combo eliminado correctamente");
+    } catch (error) {
+        console.error("Error al eliminar el combo:", error);
+        res.status(500).json({ error: "Error al eliminar el combo" });
+    }
+});
+
+//ComboExtra
 app.get("/comboextra", async function (req, res){
     const comboextrActivo = await Combo_Extra.findAll({
         where:{
@@ -121,7 +159,6 @@ app.get("/comboextra", async function (req, res){
     });
     res.status(200).json(comboextrActivo);
 });
-
 
 app.post("/comboextra", async function(req, res) {
     try {
@@ -140,9 +177,49 @@ app.post("/comboextra", async function(req, res) {
     }
 });
 
+// ACTUALIZAR COMBOEXTRA
+app.put('/comboextra/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { seccion, estado } = req.body;
 
+        const comboExtra = await Combo_Extra.findByPk(id);
 
+        if (!comboExtra) {
+            return res.status(404).json({ error: 'Relación no encontrada' });
+        }
 
+        await comboExtra.update({
+            ...(seccion && { seccion }), 
+            ...(estado !== undefined && { estado })
+        });
+
+        res.status(200).json({ message: 'Relación actualizada con éxito', data: comboExtra });
+    } catch (error) {
+        console.error('Error al actualizar la relación Combo_Extra:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+// ELIMINAR COMBO EXTRA
+app.delete('/comboextra/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const comboExtra = await Combo_Extra.findByPk(id);
+
+        if (!comboExtra) {
+            return res.status(404).json({ error: 'Relación no encontrada' });
+        }
+
+        await comboExtra.update({ estado: false });
+
+        res.status(200).json({ message: 'Relación eliminada con éxito', data: comboExtra });
+    } catch (error) {
+        console.error('Error al eliminar la relación Combo_Extra:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
 
 //ComboCarrito
 app.get("/combocarrito", async function(req, res){
@@ -401,10 +478,76 @@ app.post("/metodopago/:id/pago", async function(req, res){
 });
 
 
-//Extras
+//EXTRAS TODO
 app.get("/extra", async function(req, res){
     const extraActivo = await Extra.findAll({
         where: {
+            estado:true
+        }
+    });
+    res.status(200).json(extraActivo);
+});
+
+//EXTRAS COMPLEMENTO
+app.get("/extra_complemento", async function(req, res){
+    const extraActivo = await Extra.findAll({
+        where: {
+            tipo: 'Complementos',
+            estado:true
+        }
+    });
+    res.status(200).json(extraActivo);
+});
+
+//EXTRAS BEBIDAS
+app.get("/extra_bebida", async function(req, res){
+    const extraActivo = await Extra.findAll({
+        where: {
+            tipo: 'Bebidas',
+            estado:true
+        }
+    });
+    res.status(200).json(extraActivo);
+});
+
+//EXTRAS SANDWICHES
+app.get("/extra_sandwich", async function(req, res){
+    const extraActivo = await Extra.findAll({
+        where: {
+            tipo: 'Sandwiches',
+            estado:true
+        }
+    });
+    res.status(200).json(extraActivo);
+});
+
+//EXTRAS TOSTYROLLS
+app.get("/extra_tostyroll", async function(req, res){
+    const extraActivo = await Extra.findAll({
+        where: {
+            tipo: 'Tosty Rolls',
+            estado:true
+        }
+    });
+    res.status(200).json(extraActivo);
+});
+
+//EXTRAS PIEZAS POLLO CLASICAS
+app.get("/extra_pieza_pollo_clasica", async function(req, res){
+    const extraActivo = await Extra.findAll({
+        where: {
+            tipo: 'Piezas de Pollo',
+            estado:true
+        }
+    });
+    res.status(200).json(extraActivo);
+});
+
+//EXTRAS PIEZAS POLLO PICANTES
+app.get("/extra_pieza_pollo_picante", async function(req, res){
+    const extraActivo = await Extra.findAll({
+        where: {
+            tipo: 'Piezas de Pollo Picantito',
             estado:true
         }
     });

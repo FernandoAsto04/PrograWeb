@@ -8,7 +8,6 @@ const NavbarAdmin = () => {
   return (
     <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
       <Toolbar>
-        {/* Icono del menú, que puede usarse para abrir el sidebar en pantallas móviles */}
         <IconButton
           edge="start"
           color="inherit"
@@ -18,19 +17,16 @@ const NavbarAdmin = () => {
           <MenuIcon />
         </IconButton>
 
-        {/* Título del navbar */}
         <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
           Admin Dashboard
         </Typography>
 
-        {/* Icono de notificaciones */}
         <IconButton color="inherit">
-          <Badge badgeContent={4} color="error">
+          <Badge badgeContent={1} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
 
-        {/* Icono de perfil */}
         <IconButton color="inherit">
           <AccountCircle />
         </IconButton>

@@ -8,20 +8,17 @@ const DashboardScreen = () => {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
 
-      {/* Navbar */}
       <Navbar />
 
-      {/* Sidebar */}
       <Sidebar />
 
-      {/* Contenido principal */}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
           bgcolor: 'background.default',
           p: 3,
-          marginLeft: '240px', // Ancho del sidebar para que no se sobreponga
+          marginLeft: '240px',
         }}
       >
         <Toolbar />
