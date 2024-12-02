@@ -22,7 +22,7 @@ const app = express();
 const port = 3002;
 
 
-app.use(express.json()); // Estaba así: app.use(json());
+app.use(express.json()); 
 app.use(cors());
 
 async function verificarConexion(){
@@ -185,30 +185,6 @@ app.post("/combocarrito/:idCarrito/:idCombo/:idComboExtra/:cantidad/:subtotal", 
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //PedidoDetalle
 app.get("/pedidodetalle", async function (req, res) {
     const pedidodetalleActivo = await PedidoDetalle.findAll({
@@ -236,9 +212,6 @@ app.post("/pedidodetalle/:idPedido/:idComboExtra/:cantidad", async function(req,
         res.status(500).send("Hubo un error al agregar el pedidodetalle");
     }
 });
-
-
-
 
 
 //Pedido
@@ -292,43 +265,6 @@ app.post("/pedido/:idTipoPedido/:idUsuario/:idLocalDespacho/:idPago", async func
         res.status(500).json({ message: "Error al crear el pedido", error: error.message });
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //TipoDocumento
@@ -446,7 +382,6 @@ app.post("/metodopago", async function(req, res){
 });
 
 
-
 //Pago
 app.get("/pago", async function(req, res){
     const pagoActivo = await Pago.findAll({
@@ -464,13 +399,6 @@ app.post("/metodopago/:id/pago", async function(req, res){
     metodopago.addPago(nuevopago);
     res.status(200).json(nuevopago)
 });
-
-
-
-
-
-
-
 
 
 //Extras
@@ -587,6 +515,15 @@ app.post("/localesdespacho/:idLocal/:idDespacho", async function(req, res){
 
     res.status(200).send("Agregado exitosamente");
 });
+
+
+
+
+
+
+
+
+
 
 
 
