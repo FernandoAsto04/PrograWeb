@@ -122,24 +122,26 @@ app.get("/comboextra", async function (req, res){
     res.status(200).json(comboextrActivo);
 });
 
-app.post("/comboextra/:idCombo/:idExtra/:seccion", async function(req, res) {
-    try {
-        const combo = await Combo.findByPk(req.params.idCombo);
-        const extra = await Extra.findByPk(req.params.idExtra);
 
-        // Agregar Extra al Combo con la sección
-        await Combo_Extra.create({
-            ComboId: combo.id,
-            ExtraId: extra.id,
-            seccion: req.params.seccion
+app.post("/comboextra", async function(req, res) {
+    try {
+        const {seccion, ComboId, ExtraId} = req.body;
+
+        const nuevoComboExtra = await Combo_Extra.create({
+            ComboId,
+            ExtraId,
+            seccion
         });
 
-        res.status(200).send("Se agregó el comboextra con éxito");
+        res.status(200).json(nuevoComboExtra);
     } catch (error) {
         console.error(error);
-        res.status(500).send("Hubo un error al agregar el comboextra");
+        res.status(404).send("Hubo un error al agregar el comboextra");
     }
 });
+
+
+
 
 
 //ComboCarrito
@@ -155,13 +157,10 @@ app.get("/combocarrito", async function(req, res){
 app.post("/combocarrito/:idCarrito/:idCombo/:idComboExtra/:cantidad/:subtotal", async (req, res) => {
     try {
         const { idCarrito, idCombo, idComboExtra, cantidad, subtotal } = req.params;
-
-        // Buscar los modelos correspondientes
         const carrito = await Carrito.findByPk(idCarrito);
         const combo = await Combo.findByPk(idCombo);
         const comboextra = await Combo_Extra.findByPk(idComboExtra);
-
-        // Verificar si los registros existen
+    
         if (!carrito || !combo || !comboextra) {
             return res.status(404).send("Carrito, Combo o ComboExtra no encontrado");
         }
